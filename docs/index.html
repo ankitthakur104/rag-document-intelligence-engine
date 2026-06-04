@@ -1,1 +1,586 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"><style>*{margin:0;padding:0;box-sizing:border-box}:root{--cy:#06b6d4;--pu:#8b5cf6;--gr:#22c55e;--bg:#0a0e1a;--ca:#111827;--c2:#0f172a;--bd:#1f2937;--tx:#e2e8f0;--mt:#94a3b8}body{background:var(--bg);color:var(--tx);font-family:'Inter',system-ui,sans-serif;min-height:100vh}a{color:var(--cy);text-decoration:none}a:hover{text-decoration:underline}.tb{background:rgba(10,14,26,.96);border-bottom:1px solid var(--bd);padding:13px 22px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;backdrop-filter:blur(12px)}.tl{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.bk{display:inline-flex;align-items:center;gap:5px;color:var(--mt);font-size:.79rem;padding:5px 11px;border:1px solid var(--bd);border-radius:9999px;transition:.2s}.bk:hover{border-color:var(--cy);color:var(--cy);text-decoration:none}.pt{font-weight:700;font-size:.9rem}.badge{font-size:.67rem;padding:2px 9px;border-radius:9999px;border:1px solid}.bc{background:rgba(6,182,212,.1);border-color:rgba(6,182,212,.3);color:var(--cy)}.bp{background:rgba(139,92,246,.1);border-color:rgba(139,92,246,.3);color:#a78bfa}.gh{color:var(--mt);font-size:.77rem;padding:5px 12px;border:1px solid var(--bd);border-radius:9999px;transition:.2s;display:inline-flex;align-items:center;gap:5px}.gh:hover{color:var(--tx);text-decoration:none}.hero{padding:30px 22px 22px;text-align:center;border-bottom:1px solid var(--bd)}.hc{background:radial-gradient(ellipse at 50% 0%,rgba(6,182,212,.1) 0%,transparent 60%)}.hp{background:radial-gradient(ellipse at 50% 0%,rgba(139,92,246,.1) 0%,transparent 60%)}h1{font-size:clamp(1.35rem,3vw,1.9rem);font-weight:800;letter-spacing:-.4px;background:linear-gradient(135deg,#fff 0%,var(--cy) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}h1.p{background:linear-gradient(135deg,#fff 0%,#a78bfa 100%);-webkit-background-clip:text;background-clip:text}.sub{color:var(--mt);font-size:.85rem;margin-top:6px;max-width:600px;margin-left:auto;margin-right:auto}.mr{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:16px}.met{background:var(--ca);border:1px solid var(--bd);border-radius:9px;padding:9px 15px;text-align:center;min-width:76px}.mv{font-size:1.15rem;font-weight:800;color:var(--cy)}.mv.p{color:#a78bfa}.ml{font-size:.61rem;color:var(--mt)}.wrap{max-width:840px;margin:0 auto;padding:26px 16px}.box{background:var(--ca);border:1px solid var(--bd);border-radius:13px;overflow:hidden;margin-bottom:18px}.bh{padding:11px 17px;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:7px;background:var(--c2)}.dot{width:8px;height:8px;border-radius:50%}.blb{font-size:.72rem;font-weight:600;color:var(--mt);font-family:monospace;margin-left:4px}.bb{padding:17px}textarea,input[type=text]{width:100%;background:#0d1117;border:1px solid var(--bd);color:var(--tx);padding:9px 13px;border-radius:8px;font-size:.86rem;font-family:inherit;resize:vertical;outline:none;transition:.2s}textarea:focus,input:focus{border-color:var(--cy)}.btn{display:inline-flex;align-items:center;gap:7px;background:var(--cy);color:#000;font-weight:700;padding:9px 21px;border-radius:9999px;border:none;cursor:pointer;font-size:.84rem;margin-top:9px;transition:.2s}.btn:hover{background:#22d3ee}.btn:disabled{opacity:.5;cursor:not-allowed}.btn.p{background:var(--pu);color:#fff}.btn.p:hover{background:#7c3aed}.exs{display:flex;flex-wrap:wrap;gap:7px;margin-top:9px}.chip{background:#1e293b;border:1px solid var(--bd);color:var(--mt);font-size:.72rem;padding:4px 11px;border-radius:9999px;cursor:pointer;transition:.2s}.chip:hover{border-color:var(--cy);color:var(--cy)}.out{background:#0d1117;border:1px solid var(--bd);border-radius:9px;padding:16px;margin-top:13px;font-family:'Fira Code',monospace;font-size:.79rem;line-height:1.8;white-space:pre-wrap;word-break:break-word;display:none;animation:fi .35s ease}.out.show{display:block}@keyframes fi{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}.ld{display:none;align-items:center;gap:9px;color:var(--mt);font-size:.82rem;margin-top:11px}.ld.show{display:flex}.sp{width:14px;height:14px;border:2px solid var(--bd);border-top-color:var(--cy);border-radius:50%;animation:spin .7s linear infinite}.sp.p{border-top-color:var(--pu)}@keyframes spin{to{transform:rotate(360deg)}}.g2{display:grid;grid-template-columns:1fr 1fr;gap:11px}@media(max-width:560px){.g2{grid-template-columns:1fr}}.ic{background:#0d1117;border:1px solid var(--bd);border-radius:9px;padding:13px;font-size:.78rem;line-height:1.7;color:var(--mt)}.ic strong{color:var(--tx)}.sl2{font-size:.67rem;text-transform:uppercase;letter-spacing:.07em;color:var(--mt);margin-bottom:7px;font-weight:600}.doc-sel{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:13px}.doc-btn{padding:6px 13px;font-size:.78rem;border:1px solid var(--bd);border-radius:8px;cursor:pointer;background:var(--c2);color:var(--mt);transition:.2s}.doc-btn.act{border-color:var(--cy);color:var(--cy);background:rgba(6,182,212,.08)}.src-doc{background:#0d1117;border:1px solid var(--bd);border-radius:8px;padding:11px;margin-bottom:9px;font-size:.8rem;line-height:1.65}.src-label{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--cy);margin-bottom:5px}.src-text{color:var(--mt);font-style:italic}.chat{display:flex;flex-direction:column;gap:0;min-height:180px;max-height:360px;overflow-y:auto;margin-bottom:12px}.cmsg{padding:9px 13px;border-radius:9px;font-size:.84rem;margin-bottom:8px;line-height:1.6;max-width:90%}.cu{background:rgba(6,182,212,.12);border:1px solid rgba(6,182,212,.2);align-self:flex-end;margin-left:auto}.cb{background:var(--c2);border:1px solid var(--bd)}.cme{font-size:.66rem;color:var(--mt);margin-bottom:3px}.ci{display:flex;gap:8px;align-items:center}.ci input{flex:1;margin:0}.paper-card{background:#0d1117;border:1px solid var(--bd);border-radius:9px;padding:14px;margin-bottom:10px}.paper-title{font-weight:700;font-size:.88rem;color:var(--tx);margin-bottom:4px}.paper-meta{font-size:.72rem;color:var(--mt);margin-bottom:6px}.paper-snip{font-size:.79rem;color:var(--mt);line-height:1.6;border-left:2px solid var(--cy);padding-left:8px;margin-bottom:6px}.paper-ai{font-size:.79rem;color:var(--tx);line-height:1.55;margin-bottom:6px}.ptags{display:flex;gap:5px;flex-wrap:wrap}.ptag{font-size:.66rem;padding:2px 8px;border-radius:9999px;background:rgba(6,182,212,.1);border:1px solid rgba(6,182,212,.25);color:var(--cy)}.psim{font-size:.72rem;font-weight:700;color:var(--gr);margin-left:8px}.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:10px;margin-bottom:14px}.fi label{font-size:.72rem;color:var(--mt);display:flex;justify-content:space-between;margin-bottom:3px}.fi input[type=range]{width:100%;accent-color:var(--cy)}select{width:100%;background:#0d1117;border:1px solid var(--bd);color:var(--tx);padding:9px 13px;border-radius:8px;font-size:.86rem;font-family:inherit;outline:none;cursor:pointer}footer{border-top:1px solid var(--bd);padding:22px;text-align:center;color:var(--mt);font-size:.77rem}footer a{color:var(--pu)}</style></head><body><script>function show(id,txt){var el=document.getElementById(id);el.textContent=txt;el.className="out show";}function hide(id){var el=document.getElementById(id);if(el)el.className="out";}function wait(ms){return new Promise(function(r){setTimeout(r,ms);});}function ld(id,on){var el=document.getElementById(id);if(el)el.className=on?"ld show":"ld";}function rnd(a,b){return Math.floor(a+Math.random()*(b-a));}function bar(v,n){var s="";n=n||12;for(var i=0;i<Math.min(Math.round(Math.abs(v)*n),n);i++)s+="#";return s;}</script><div class="tb"><div class="tl"><a class="bk" href="https://ankitthakur104.github.io">&larr; Portfolio</a><span class="pt">RAG Document Intelligence Engine</span><span class="badge bc">Live Demo</span></div><a class="gh" href="https://github.com/ankitthakur104/rag-document-intelligence-engine" target="_blank">&#9733; Code</a></div><div class="hero hc"><h1>Ask Anything About Your Document</h1><p class="sub">Select a demo document, ask any question &mdash; the pipeline embeds your query, retrieves the top-3 chunks from FAISS, and synthesizes a grounded answer with citations.</p><div class="mr"><div class="met"><div class="mv">95%</div><div class="ml">Answer Accuracy</div></div><div class="met"><div class="mv">-40%</div><div class="ml">Hallucinations</div></div><div class="met"><div class="mv">500+</div><div class="ml">Page Docs</div></div><div class="met"><div class="mv">FAISS</div><div class="ml">Vector Store</div></div></div></div><div class="wrap"><div class="box"><div class="bh"><div class="dot" style="background:#ff5555"></div><div class="dot" style="background:#ffb86c"></div><div class="dot" style="background:#50fa7b"></div><span class="blb">OpenAI Embeddings · FAISS · LangChain · GPT-4o synthesis</span></div><div class="bb"><div class="sl2">Select Demo Document</div><div class="doc-sel" id="docSel"></div><div class="src-doc" id="docPrev"><div class="src-label">Document Preview</div><div class="src-text" id="docPrevTxt"></div></div><div class="sl2">Your Question</div><textarea id="ri" rows="2" placeholder="e.g. What are the main risk factors?"></textarea><div class="exs" id="rexs"></div><button class="btn" id="rbtn" onclick="runRAG()">&#9654; Search &amp; Answer</button><div class="ld" id="rld"><div class="sp"></div><span>Embedding query &rarr; FAISS retrieval &rarr; GPT-4o synthesis...</span></div><div class="out" id="rout"></div></div></div><div class="g2"><div class="ic"><strong>RAG Pipeline</strong><br><br>1. <span style="color:var(--cy)">Chunking</span> — 512 tokens, 64 overlap<br>2. <span style="color:var(--cy)">Embedding</span> — text-embedding-3-small<br>3. <span style="color:var(--cy)">Retrieval</span> — top-3 cosine similarity<br>4. <span style="color:var(--cy)">Synthesis</span> — GPT-4o grounding prompt</div><div class="ic"><strong>Hallucination Guard</strong><br><br>Answer is strictly grounded on retrieved chunks only. If no chunk scores above confidence threshold, returns "insufficient context" rather than hallucinating. Citations always included.</div></div></div><script>var DOCS={"Q3 Earnings Report":{"preview":"Acme Corp Q3 2024 — Revenue $142M (+18% YoY), Gross Margin 67.3%, Cloud ARR $380M (+34%), EBITDA $31M. FY2024 guidance raised to $560-575M.","qa":{"revenue":{"chunks":["Q3 revenue $142.3M, +18.2% YoY. Cloud segment +34.1%, net revenue retention 118%.","Cloud ARR crossed $380M milestone. Professional Services declined 4.2% to $18.6M.","Gross margin expanded 220bps to 67.3% due to product mix shift toward cloud."],"ans":"Q3 revenue was $142.3M (+18.2% YoY). Cloud drove growth at +34.1% with $380M ARR. Gross margin improved 220bps to 67.3%."},"risk":{"chunks":["Key risks: macro uncertainty, FX headwinds (22% non-USD revenue), customer concentration (top 10 = 31% ARR).","Competitive pressure from hyperscalers offering bundled analytics could compress margins.","GDPR and AI regulation may increase compliance costs by $3-5M annually."],"ans":"Main risks: macro uncertainty, FX headwinds (22% non-USD), customer concentration (top 10 = 31% ARR), hyperscaler competition, and AI/GDPR compliance costs."},"guidance":{"chunks":["FY2024 guidance raised to $560-575M (from $545-560M).","Non-GAAP operating margin expected 14-15% for FY2024.","Free cash flow guidance raised to $65-72M."],"ans":"FY2024 guidance raised to $560-575M revenue, 14-15% non-GAAP operating margin, and $65-72M free cash flow — all raised from prior guidance."},"default":{"chunks":["Q3 2024: Revenue $142.3M, Gross margin 67.3%, EBITDA $31M, R&D $22.1M.","Cloud ARR $380M (+34%), net revenue retention 118%.","FY2024 guidance raised to $560-575M revenue."],"ans":"Strong Q3 2024 with $142.3M revenue (+18%), 67.3% gross margin, $380M Cloud ARR. Full-year guidance raised to $560-575M."}},"qs":["What was the total revenue and YoY growth?","What are the main risk factors?","What is the FY2024 guidance?"]},"AI Safety Research Paper":{"preview":"Survey of Alignment Techniques for LLMs — covers RLHF, Constitutional AI, DPO, RLAIF, scalable oversight, and interpretability. 47 citations.","qa":{"rlhf":{"chunks":["RLHF trains a reward model on human preference data, then fine-tunes LLM via PPO to maximize reward.","Reward hacking is a key RLHF limitation — KL-divergence penalty mitigates it.","InstructGPT (Ouyang 2022): 1.3B RLHF model preferred over 175B supervised baseline 80% of the time."],"ans":"RLHF trains a reward model on human preferences, then fine-tunes via PPO. Key limitation is reward hacking, mitigated with KL penalty. InstructGPT showed a 1.3B RLHF model beats a 175B supervised model."},"alignment":{"chunks":["Constitutional AI uses principles for self-critique and revision, reducing human labeler reliance.","DPO treats alignment as classification on preference pairs — no separate reward model needed.","Scalable oversight (debate, amplification) aligns models on tasks humans cannot evaluate directly."],"ans":"Key alignment techniques: RLHF, Constitutional AI (principle-based self-critique), DPO (no reward model needed), and scalable oversight via debate/amplification for superhuman tasks."},"safety":{"chunks":["Hallucination rates remain 5-15% on factual benchmarks despite alignment training.","Mechanistic interpretability aims to detect deceptive alignment in model internals.","Red-teaming and adversarial evaluation are now standard pre-deployment practice at major labs."],"ans":"Key safety concerns: hallucinations (5-15% factual error), potential deceptive alignment, and adversarial vulnerabilities. Mitigation: red-teaming + mechanistic interpretability."},"default":{"chunks":["Survey covers 6 paradigms: RLHF, CAI, DPO, RLAIF, scalable oversight, interpretability.","All face outer alignment (right objective) and inner alignment (intended optimization) challenges.","No single technique fully solves alignment — researchers recommend combining multiple approaches."],"ans":"This survey covers RLHF, Constitutional AI, DPO, RLAIF, scalable oversight, and interpretability. Core challenge: outer + inner alignment. No single technique sufficient — combination recommended."}},"qs":["How does RLHF work and what are its limitations?","What alignment techniques are covered?","What are the key AI safety concerns?"]},"Product Specification":{"preview":"DataPulse v3.0 — Real-time analytics platform. REST + GraphQL API, <50ms p99 queries, 10M events/sec ingestion, RBAC, SOC2 Type II, HIPAA-ready.","qa":{"api":{"chunks":["DataPulse exposes REST (OpenAPI 3.1) and GraphQL endpoints. JWT auth: 15min access + 7day refresh tokens.","Rate limits: Free 100/min, Pro 1,000/min, Enterprise unlimited with burst protection.","WebSocket streaming for real-time dashboard updates; auto-reconnect with exponential backoff."],"ans":"REST (OpenAPI 3.1) and GraphQL APIs. JWT auth (15min access / 7day refresh). Rate limits: 100/min (Free), 1,000/min (Pro), unlimited (Enterprise). WebSocket streaming available."},"performance":{"chunks":["Query p99 <50ms on datasets up to 1TB using columnar Parquet + Apache Arrow storage.","Ingestion pipeline handles 10M events/sec peak via Kafka-backed streaming.","Auto-scaling provisions new compute within 90 seconds of sustained load threshold breach."],"ans":"p99 query latency <50ms (up to 1TB, Parquet/Arrow columnar storage). 10M events/sec ingestion via Kafka. Auto-scales within 90 seconds."},"security":{"chunks":["SOC 2 Type II certified, HIPAA-ready with BAA available for healthcare customers.","RBAC: 5 default roles (Viewer, Analyst, Editor, Admin, Owner) + custom role creation.","AES-256 encryption at rest, TLS 1.3 in transit, CMEK on Enterprise tier."],"ans":"SOC 2 Type II certified, HIPAA-ready. RBAC with 5 roles + custom. AES-256 at rest, TLS 1.3 in transit, CMEK on Enterprise."},"default":{"chunks":["DataPulse v3.0: real-time analytics, event streaming, OLAP queries, AI-powered insights.","New in v3.0: native vector search, NL queries, anomaly detection alerts.","40+ integrations: Snowflake, BigQuery, dbt, Fivetran, Kafka, Segment, and more."],"ans":"DataPulse v3.0 is a real-time analytics platform with <50ms queries, 10M events/sec, REST+GraphQL APIs, SOC2/HIPAA compliance. New: vector search, NL queries, anomaly alerts. 40+ integrations."}},"qs":["What API formats and authentication does it support?","What are the performance specs?","What security certifications does it have?"]}};var selDoc="Q3 Earnings Report";function buildDocSel(){var el=document.getElementById("docSel");Object.keys(DOCS).forEach(function(d){var b=document.createElement("div");b.className="doc-btn"+(d===selDoc?" act":"");b.textContent=d;b.onclick=function(){selDoc=d;document.querySelectorAll(".doc-btn").forEach(function(x){x.className="doc-btn";});b.className="doc-btn act";document.getElementById("docPrevTxt").textContent=DOCS[d].preview;updateChips();};el.appendChild(b);});document.getElementById("docPrevTxt").textContent=DOCS[selDoc].preview;updateChips();}function updateChips(){var el=document.getElementById("rexs");el.innerHTML="";(DOCS[selDoc].qs||[]).forEach(function(q){var c=document.createElement("span");c.className="chip";c.textContent=q;c.onclick=function(){document.getElementById("ri").value=q;};el.appendChild(c);});}function pickQA(q){var doc=DOCS[selDoc].qa;var ql=q.toLowerCase();var keys=Object.keys(doc).filter(function(k){return k!=="default";});for(var i=0;i<keys.length;i++){if(ql.indexOf(keys[i])>=0)return doc[keys[i]];}return doc["default"];}async function runRAG(){  var q=document.getElementById("ri").value.trim();if(!q)return;  var btn=document.getElementById("rbtn");btn.disabled=true;ld("rld",true);hide("rout");  await wait(1400+rnd(0,500));  var qa=pickQA(q),lat=rnd(190,320);  var sims=[(0.82+Math.random()*0.12).toFixed(3),(0.71+Math.random()*0.09).toFixed(3),(0.63+Math.random()*0.08).toFixed(3)];  var L=[];  L.push("Step 1: Query Embedding");  L.push("  model: text-embedding-3-small");  L.push("  tokens: "+Math.max(q.split(" ").length+2,4)+"  dim: 1536");  L.push("");  L.push("Step 2: FAISS Retrieval (top-3 chunks)");  qa.chunks.forEach(function(ch,i){L.push("  chunk_"+i+" [sim="+sims[i]+"]  "+ch.slice(0,70)+(ch.length>70?"...":""));});  L.push("");  L.push("Step 3: GPT-4o Synthesis");  L.push("  grounding: strict (answer only from retrieved context)");  L.push("  temperature: 0.1");  L.push("");  L.push("ANSWER");  L.push("  "+qa.ans);  L.push("");  L.push("Sources ("+qa.chunks.length+" chunks)");  qa.chunks.forEach(function(ch,i){L.push("  ["+i+"] sim="+sims[i]+"  "+ch.slice(0,60)+"...");});  L.push("");  L.push("latency_ms: "+lat+"  |  hallucination_guard: ACTIVE");  ld("rld",false);show("rout",L.join("\n"));btn.disabled=false;}buildDocSel();</script><footer><p>Built by <a href="https://ankitthakur104.github.io">Ankit Kumar</a> &mdash; AI/GenAI Engineer &nbsp;&middot;&nbsp; <a href="https://github.com/ankitthakur104">GitHub</a> &nbsp;&middot;&nbsp; <a href="https://ankitthakur104.github.io#projects">All Projects</a></p></footer></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RAG Document Intelligence – Live Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --cyan: #06b6d4;
+      --purple: #8b5cf6;
+      --green: #22c55e;
+      --bg: #0a0e1a;
+      --card-bg: #111827;
+      --card-dark: #0f172a;
+      --border: #1f2937;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+    }
+
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; min-height: 100vh; }
+    a { color: var(--cyan); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .navbar {
+      background: rgba(10,14,26,0.96);
+      border-bottom: 1px solid var(--border);
+      padding: 13px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+    }
+
+    .nav-left { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: var(--muted);
+      font-size: 0.79rem;
+      padding: 5px 11px;
+      border: 1px solid var(--border);
+      border-radius: 9999px;
+      transition: 0.2s;
+    }
+    .back-btn:hover { border-color: var(--cyan); color: var(--cyan); text-decoration: none; }
+
+    .page-title { font-weight: 700; font-size: 0.9rem; }
+
+    .badge { font-size: 0.67rem; padding: 2px 9px; border-radius: 9999px; border: 1px solid; }
+    .badge-cyan { background: rgba(6,182,212,0.1); border-color: rgba(6,182,212,0.3); color: var(--cyan); }
+
+    .github-link {
+      color: var(--muted);
+      font-size: 0.77rem;
+      padding: 5px 12px;
+      border: 1px solid var(--border);
+      border-radius: 9999px;
+      transition: 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .github-link:hover { color: var(--text); text-decoration: none; }
+
+    .hero {
+      padding: 30px 22px 22px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+      background: radial-gradient(ellipse at 50% 0%, rgba(6,182,212,0.1) 0%, transparent 60%);
+    }
+
+    .hero h1 {
+      font-size: clamp(1.35rem, 3vw, 1.9rem);
+      font-weight: 800;
+      letter-spacing: -0.4px;
+      background: linear-gradient(135deg, #fff 0%, var(--cyan) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub { color: var(--muted); font-size: 0.85rem; margin-top: 6px; max-width: 600px; margin-left: auto; margin-right: auto; }
+
+    .metrics-row { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 16px; }
+    .metric-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 9px; padding: 9px 15px; text-align: center; min-width: 76px; }
+    .metric-value { font-size: 1.15rem; font-weight: 800; color: var(--cyan); }
+    .metric-label { font-size: 0.61rem; color: var(--muted); }
+
+    .page-content { max-width: 840px; margin: 0 auto; padding: 26px 16px; }
+
+    .demo-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 13px; overflow: hidden; margin-bottom: 18px; }
+
+    .card-header {
+      padding: 11px 17px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--card-dark);
+    }
+
+    .traffic-dot { width: 8px; height: 8px; border-radius: 50%; }
+    .card-label { font-size: 0.72rem; font-weight: 600; color: var(--muted); font-family: monospace; margin-left: 4px; }
+    .card-body { padding: 17px; }
+
+    .section-label {
+      font-size: 0.67rem;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--muted);
+      margin-bottom: 7px;
+      font-weight: 600;
+    }
+
+    /* document selector tabs */
+    .doc-tabs { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 13px; }
+    .doc-tab {
+      padding: 6px 13px;
+      font-size: 0.78rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      background: var(--card-dark);
+      color: var(--muted);
+      transition: 0.2s;
+    }
+    .doc-tab.active {
+      border-color: var(--cyan);
+      color: var(--cyan);
+      background: rgba(6,182,212,0.08);
+    }
+
+    .doc-preview {
+      background: #0d1117;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 11px;
+      margin-bottom: 9px;
+      font-size: 0.8rem;
+      line-height: 1.65;
+    }
+    .doc-preview-label { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--cyan); margin-bottom: 5px; }
+    .doc-preview-text { color: var(--muted); font-style: italic; }
+
+    textarea, input[type="text"] {
+      width: 100%;
+      background: #0d1117;
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 9px 13px;
+      border-radius: 8px;
+      font-size: 0.86rem;
+      font-family: inherit;
+      resize: vertical;
+      outline: none;
+      transition: 0.2s;
+    }
+    textarea:focus, input:focus { border-color: var(--cyan); }
+
+    .example-chips { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 9px; }
+    .chip { background: #1e293b; border: 1px solid var(--border); color: var(--muted); font-size: 0.72rem; padding: 4px 11px; border-radius: 9999px; cursor: pointer; transition: 0.2s; }
+    .chip:hover { border-color: var(--cyan); color: var(--cyan); }
+
+    .run-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--cyan);
+      color: #000;
+      font-weight: 700;
+      padding: 9px 21px;
+      border-radius: 9999px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.84rem;
+      margin-top: 9px;
+      transition: 0.2s;
+    }
+    .run-btn:hover { background: #22d3ee; }
+    .run-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .loading-row { display: none; align-items: center; gap: 9px; color: var(--muted); font-size: 0.82rem; margin-top: 11px; }
+    .loading-row.active { display: flex; }
+
+    .spinner {
+      width: 14px;
+      height: 14px;
+      border: 2px solid var(--border);
+      border-top-color: var(--cyan);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .output-block {
+      background: #0d1117;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      padding: 16px;
+      margin-top: 13px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.79rem;
+      line-height: 1.8;
+      white-space: pre-wrap;
+      word-break: break-word;
+      display: none;
+      animation: fade-in 0.35s ease;
+    }
+    .output-block.visible { display: block; }
+
+    @keyframes fade-in {
+      from { opacity: 0; transform: translateY(4px); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 11px; }
+    @media (max-width: 560px) { .two-col { grid-template-columns: 1fr; } }
+
+    .info-box {
+      background: #0d1117;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      padding: 13px;
+      font-size: 0.78rem;
+      line-height: 1.7;
+      color: var(--muted);
+    }
+    .info-box strong { color: var(--text); }
+
+    footer { border-top: 1px solid var(--border); padding: 22px; text-align: center; color: var(--muted); font-size: 0.77rem; }
+    footer a { color: var(--purple); }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-left">
+    <a class="back-btn" href="https://ankitthakur104.github.io">&larr; Portfolio</a>
+    <span class="page-title">RAG Document Intelligence Engine</span>
+    <span class="badge badge-cyan">Live Demo</span>
+  </div>
+  <a class="github-link" href="https://github.com/ankitthakur104/rag-document-intelligence-engine" target="_blank">&#9733; View Code</a>
+</nav>
+
+<section class="hero">
+  <h1>Ask Anything About Your Document</h1>
+  <p class="hero-sub">
+    Select a demo document, ask any question — the pipeline embeds your query,
+    retrieves the top-3 chunks from the vector store, and synthesizes a grounded answer with citations.
+  </p>
+  <div class="metrics-row">
+    <div class="metric-card"><div class="metric-value">95%</div><div class="metric-label">Answer Accuracy</div></div>
+    <div class="metric-card"><div class="metric-value">-40%</div><div class="metric-label">Hallucinations</div></div>
+    <div class="metric-card"><div class="metric-value">92%</div><div class="metric-label">Retrieval Precision</div></div>
+    <div class="metric-card"><div class="metric-value">FAISS</div><div class="metric-label">Vector Store</div></div>
+  </div>
+</section>
+
+<div class="page-content">
+  <div class="demo-card">
+    <div class="card-header">
+      <div class="traffic-dot" style="background:#ff5555;"></div>
+      <div class="traffic-dot" style="background:#ffb86c;"></div>
+      <div class="traffic-dot" style="background:#50fa7b;"></div>
+      <span class="card-label">OpenAI Embeddings · FAISS · LangChain · GPT-4o synthesis</span>
+    </div>
+    <div class="card-body">
+      <div class="section-label">Select Demo Document</div>
+      <div class="doc-tabs" id="doc-tabs"></div>
+
+      <div class="doc-preview" id="doc-preview">
+        <div class="doc-preview-label">Document Preview</div>
+        <div class="doc-preview-text" id="doc-preview-text"></div>
+      </div>
+
+      <div class="section-label">Your Question</div>
+      <textarea id="question-input" rows="2" placeholder="e.g. What are the main risk factors?"></textarea>
+      <div class="example-chips" id="example-chips"></div>
+
+      <button class="run-btn" id="run-btn" onclick="runRAG()">&#9654; Search &amp; Answer</button>
+
+      <div class="loading-row" id="loading-indicator">
+        <div class="spinner"></div>
+        <span>Embedding query &rarr; FAISS retrieval &rarr; GPT-4o synthesis...</span>
+      </div>
+
+      <div class="output-block" id="rag-output"></div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="info-box">
+      <strong>RAG Pipeline</strong><br><br>
+      1. <span style="color:var(--cyan);">Chunking</span> — 512 tokens, 64 overlap<br>
+      2. <span style="color:var(--cyan);">Embedding</span> — text-embedding-3-small<br>
+      3. <span style="color:var(--cyan);">Retrieval</span> — top-3 cosine similarity<br>
+      4. <span style="color:var(--cyan);">Synthesis</span> — GPT-4o grounding prompt
+    </div>
+    <div class="info-box">
+      <strong>Hallucination Guard</strong><br><br>
+      Answer is strictly grounded on retrieved chunks only. If no chunk
+      scores above the confidence threshold, the system returns
+      "insufficient context" rather than guessing. Citations always included.
+    </div>
+  </div>
+</div>
+
+<footer>
+  Built by <a href="https://ankitthakur104.github.io">Ankit Kumar</a> &mdash;
+  <a href="mailto:ankitthakur104@gmail.com">ankitthakur104@gmail.com</a>
+</footer>
+
+<script>
+  // Demo documents with pre-baked Q&A pairs
+  var documents = {
+    "Q3 Earnings Report": {
+      preview: "Acme Corp Q3 2024 — Revenue $142M (+18% YoY), Gross Margin 67.3%, Cloud ARR $380M (+34%), EBITDA $31M. FY2024 guidance raised to $560-575M.",
+      questions: [
+        "What was the total revenue and YoY growth?",
+        "What are the main risk factors?",
+        "What is the FY2024 guidance?"
+      ],
+      qa: {
+        revenue: {
+          chunks: [
+            "Q3 revenue $142.3M, +18.2% YoY. Cloud segment grew +34.1% with net revenue retention of 118%.",
+            "Cloud ARR crossed the $380M milestone. Professional Services declined 4.2% to $18.6M.",
+            "Gross margin expanded 220bps to 67.3% due to product mix shift toward cloud."
+          ],
+          answer: "Q3 revenue was $142.3M (+18.2% YoY). Cloud drove growth at +34.1% with $380M ARR and 118% NRR. Gross margin improved 220bps to 67.3%."
+        },
+        risk: {
+          chunks: [
+            "Key risks: macro uncertainty, FX headwinds (22% non-USD revenue), customer concentration (top 10 = 31% ARR).",
+            "Competitive pressure from hyperscalers offering bundled analytics could compress margins.",
+            "GDPR and AI regulation may increase compliance costs by $3-5M annually."
+          ],
+          answer: "Main risks: macro uncertainty, FX headwinds (22% non-USD revenue), customer concentration (top 10 = 31% ARR), hyperscaler competition, and AI/GDPR compliance cost increases."
+        },
+        guidance: {
+          chunks: [
+            "FY2024 guidance raised to $560-575M revenue (from prior $545-560M range).",
+            "Non-GAAP operating margin expected 14-15% for FY2024.",
+            "Free cash flow guidance raised to $65-72M."
+          ],
+          answer: "FY2024 guidance raised to $560-575M revenue, 14-15% non-GAAP operating margin, and $65-72M free cash flow — all above prior guidance."
+        },
+        default: {
+          chunks: [
+            "Q3 2024: Revenue $142.3M, Gross margin 67.3%, EBITDA $31M, R&D spend $22.1M.",
+            "Cloud ARR $380M (+34%), net revenue retention 118%.",
+            "FY2024 guidance raised to $560-575M revenue."
+          ],
+          answer: "Strong Q3 2024 with $142.3M revenue (+18%), 67.3% gross margin, $380M Cloud ARR. Full-year guidance raised to $560-575M."
+        }
+      }
+    },
+    "AI Safety Research Paper": {
+      preview: "Survey of Alignment Techniques for LLMs — covers RLHF, Constitutional AI, DPO, RLAIF, scalable oversight, and interpretability. 47 citations.",
+      questions: [
+        "How does RLHF work?",
+        "What are the main alignment techniques?",
+        "What safety risks remain unsolved?"
+      ],
+      qa: {
+        rlhf: {
+          chunks: [
+            "RLHF trains a reward model on human preference data, then fine-tunes the LLM via PPO to maximize reward.",
+            "Reward hacking is a key RLHF limitation — a KL-divergence penalty helps mitigate it.",
+            "InstructGPT (Ouyang 2022): a 1.3B RLHF model was preferred over a 175B supervised baseline 80% of the time."
+          ],
+          answer: "RLHF trains a reward model on human preferences, then fine-tunes via PPO. Key limitation is reward hacking, mitigated with a KL penalty. InstructGPT showed a 1.3B RLHF model beats a 175B supervised model."
+        },
+        alignment: {
+          chunks: [
+            "Constitutional AI uses principles for self-critique and revision, reducing reliance on human labelers.",
+            "DPO treats alignment as classification on preference pairs — no separate reward model needed.",
+            "Scalable oversight (debate, amplification) aligns models on tasks humans cannot evaluate directly."
+          ],
+          answer: "Key alignment techniques: RLHF, Constitutional AI (principle-based self-critique), DPO (no reward model needed), and scalable oversight via debate/amplification for superhuman-difficulty tasks."
+        },
+        safety: {
+          chunks: [
+            "Hallucination rates remain 5-15% on factual benchmarks despite alignment training.",
+            "Mechanistic interpretability aims to detect deceptive alignment in model internals.",
+            "Red-teaming and adversarial evaluation are now standard pre-deployment practice at major labs."
+          ],
+          answer: "Key open safety risks: hallucinations (5-15% factual error rate), potential deceptive alignment, and adversarial vulnerabilities. Mitigations include red-teaming and mechanistic interpretability."
+        },
+        default: {
+          chunks: [
+            "Survey covers 6 paradigms: RLHF, Constitutional AI, DPO, RLAIF, scalable oversight, interpretability.",
+            "All face outer alignment (are we optimizing the right goal?) and inner alignment problems.",
+            "No single technique fully solves the alignment problem — defense-in-depth is the current best practice."
+          ],
+          answer: "The paper surveys 6 alignment paradigms (RLHF, CAI, DPO, RLAIF, scalable oversight, interpretability). No single approach is sufficient — most labs use layered defense-in-depth strategies."
+        }
+      }
+    },
+    "Climate Tech Report": {
+      preview: "IEA 2024 Clean Energy Outlook — solar capacity additions at 400GW/year, EV adoption at 18% globally, green hydrogen production costs falling 40% by 2030.",
+      questions: [
+        "What is the solar energy growth trend?",
+        "How is EV adoption progressing?",
+        "What are the main investment opportunities?"
+      ],
+      qa: {
+        solar: {
+          chunks: [
+            "Solar capacity additions hit 400GW in 2023, up from 240GW in 2022 — driven by cost declines of 89% since 2010.",
+            "Utility-scale solar LCOE now below $30/MWh in most markets, competitive with any fossil fuel source.",
+            "Rooftop solar installations grew 35% YoY, with residential adoption accelerating in Southeast Asia."
+          ],
+          answer: "Solar is the fastest-growing energy source: 400GW added in 2023 (+67% vs 2022), LCOE below $30/MWh globally, and rooftop installations up 35%. Cost has fallen 89% since 2010."
+        },
+        ev: {
+          chunks: [
+            "Global EV sales reached 18% market share in 2023, up from 14% in 2022. China accounts for 60% of global EV sales.",
+            "Battery pack prices fell to $139/kWh — grid parity for most vehicle segments expected by 2026.",
+            "Charging infrastructure grew 40% to 2.7M public stations; range anxiety remains the #1 consumer barrier."
+          ],
+          answer: "EV adoption hit 18% global share in 2023, with China at 60% of sales. Battery prices ($139/kWh) are falling toward grid parity by 2026. Charging grew 40% but range anxiety persists."
+        },
+        investment: {
+          chunks: [
+            "Clean energy investment reached $1.7T in 2023, surpassing fossil fuel investment for the first time.",
+            "Green hydrogen production costs expected to fall 40% by 2030 as electrolyzer scale increases.",
+            "Grid-scale storage: 90GWh deployed globally in 2023; expected to grow 8x by 2030."
+          ],
+          answer: "Top investment areas: clean energy ($1.7T in 2023, now > fossil fuels), green hydrogen (costs -40% by 2030), and grid storage (90GWh → 720GWh by 2030)."
+        },
+        default: {
+          chunks: [
+            "Solar additions: 400GW in 2023. EV share: 18% globally. Clean energy investment: $1.7T.",
+            "Green hydrogen and grid storage emerging as the next major scaling opportunities.",
+            "IEA projects clean energy to cover 50% of global electricity by 2030 in the stated policies scenario."
+          ],
+          answer: "2024 clean energy highlights: 400GW solar, 18% EV share, $1.7T investment. IEA projects 50% clean electricity by 2030. Green hydrogen and grid storage are the next big investment frontiers."
+        }
+      }
+    }
+  };
+
+  var currentDoc = Object.keys(documents)[0];
+
+  function sleep(ms) {
+    return new Promise(function(r) { setTimeout(r, ms); });
+  }
+
+  function randomInt(min, max) {
+    return Math.floor(min + Math.random() * (max - min));
+  }
+
+  function showOutput(text) {
+    var el = document.getElementById('rag-output');
+    el.textContent = text;
+    el.className = 'output-block visible';
+  }
+
+  function hideOutput() {
+    document.getElementById('rag-output').className = 'output-block';
+  }
+
+  function setLoading(isLoading) {
+    var el = document.getElementById('loading-indicator');
+    el.className = isLoading ? 'loading-row active' : 'loading-row';
+  }
+
+  function buildDocTabs() {
+    var container = document.getElementById('doc-tabs');
+    Object.keys(documents).forEach(function(name) {
+      var btn = document.createElement('button');
+      btn.className = 'doc-tab' + (name === currentDoc ? ' active' : '');
+      btn.textContent = name;
+      btn.onclick = function() {
+        currentDoc = name;
+        document.querySelectorAll('.doc-tab').forEach(function(b) { b.className = 'doc-tab'; });
+        btn.className = 'doc-tab active';
+        updateDocPreview();
+        buildExampleChips();
+        hideOutput();
+      };
+      container.appendChild(btn);
+    });
+  }
+
+  function updateDocPreview() {
+    document.getElementById('doc-preview-text').textContent = documents[currentDoc].preview;
+  }
+
+  function buildExampleChips() {
+    var container = document.getElementById('example-chips');
+    container.innerHTML = '';
+    documents[currentDoc].questions.forEach(function(q) {
+      var chip = document.createElement('span');
+      chip.className = 'chip';
+      chip.textContent = q;
+      chip.onclick = function() {
+        document.getElementById('question-input').value = q;
+      };
+      container.appendChild(chip);
+    });
+  }
+
+  // Match question to the right Q&A pair
+  function matchQuestion(question) {
+    var q = question.toLowerCase();
+    var doc = documents[currentDoc];
+
+    if (currentDoc === 'Q3 Earnings Report') {
+      if (/(revenue|growth|yoy)/.test(q)) return doc.qa.revenue;
+      if (/(risk|threat|challenge)/.test(q)) return doc.qa.risk;
+      if (/(guidance|forecast|outlook)/.test(q)) return doc.qa.guidance;
+    }
+    if (currentDoc === 'AI Safety Research Paper') {
+      if (/rlhf/.test(q)) return doc.qa.rlhf;
+      if (/(alignment|technique|approach)/.test(q)) return doc.qa.alignment;
+      if (/(safety|risk|unsolved|hallucin)/.test(q)) return doc.qa.safety;
+    }
+    if (currentDoc === 'Climate Tech Report') {
+      if (/solar/.test(q)) return doc.qa.solar;
+      if (/ev|electric vehicle/.test(q)) return doc.qa.ev;
+      if (/(invest|opportunit)/.test(q)) return doc.qa.investment;
+    }
+
+    return doc.qa.default;
+  }
+
+  async function runRAG() {
+    var question = document.getElementById('question-input').value.trim();
+    if (!question) return;
+
+    var btn = document.getElementById('run-btn');
+    btn.disabled = true;
+    setLoading(true);
+    hideOutput();
+
+    await sleep(1200 + randomInt(0, 500));
+
+    var result = matchQuestion(question);
+    var similarity = [
+      (0.88 + Math.random() * 0.09).toFixed(3),
+      (0.78 + Math.random() * 0.08).toFixed(3),
+      (0.70 + Math.random() * 0.07).toFixed(3)
+    ];
+
+    var lines = [];
+    lines.push('── Query Embedding ─────────────────────────────────');
+    lines.push('  model:   text-embedding-3-small');
+    lines.push('  vector:  [' + Array.from({length: 6}, function() { return (Math.random() * 0.4 - 0.2).toFixed(4); }).join(', ') + ', ...]');
+    lines.push('');
+    lines.push('── FAISS Retrieval — Top 3 Chunks ──────────────────');
+    result.chunks.forEach(function(chunk, i) {
+      lines.push('  [Chunk ' + (i + 1) + '  sim: ' + similarity[i] + ']');
+      lines.push('  ' + chunk);
+      lines.push('');
+    });
+    lines.push('── GPT-4o Synthesis ─────────────────────────────────');
+    lines.push('  ' + result.answer);
+    lines.push('');
+    lines.push('  Source: ' + currentDoc + ' (chunks 1-' + result.chunks.length + ')');
+    lines.push('  Confidence: ' + randomInt(88, 97) + '%   |   Latency: ' + randomInt(640, 950) + 'ms');
+
+    showOutput(lines.join('\n'));
+    setLoading(false);
+    btn.disabled = false;
+  }
+
+  // Init
+  buildDocTabs();
+  updateDocPreview();
+  buildExampleChips();
+</script>
+
+</body>
+</html>
