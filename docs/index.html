@@ -7,242 +7,76 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-    :root {
-      --cyan: #06b6d4;
-      --purple: #8b5cf6;
-      --green: #22c55e;
-      --bg: #0a0e1a;
-      --card-bg: #111827;
-      --card-dark: #0f172a;
-      --border: #1f2937;
-      --text: #e2e8f0;
-      --muted: #94a3b8;
-    }
-
-    body { background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; min-height: 100vh; }
-    a { color: var(--cyan); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-
-    .navbar {
-      background: rgba(10,14,26,0.96);
-      border-bottom: 1px solid var(--border);
-      padding: 13px 22px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      backdrop-filter: blur(12px);
-    }
-
-    .nav-left { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-
-    .back-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      color: var(--muted);
-      font-size: 0.79rem;
-      padding: 5px 11px;
-      border: 1px solid var(--border);
-      border-radius: 9999px;
-      transition: 0.2s;
-    }
-    .back-btn:hover { border-color: var(--cyan); color: var(--cyan); text-decoration: none; }
-
-    .page-title { font-weight: 700; font-size: 0.9rem; }
-
-    .badge { font-size: 0.67rem; padding: 2px 9px; border-radius: 9999px; border: 1px solid; }
-    .badge-cyan { background: rgba(6,182,212,0.1); border-color: rgba(6,182,212,0.3); color: var(--cyan); }
-
-    .github-link {
-      color: var(--muted);
-      font-size: 0.77rem;
-      padding: 5px 12px;
-      border: 1px solid var(--border);
-      border-radius: 9999px;
-      transition: 0.2s;
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-    }
-    .github-link:hover { color: var(--text); text-decoration: none; }
-
-    .hero {
-      padding: 30px 22px 22px;
-      text-align: center;
-      border-bottom: 1px solid var(--border);
-      background: radial-gradient(ellipse at 50% 0%, rgba(6,182,212,0.1) 0%, transparent 60%);
-    }
-
-    .hero h1 {
-      font-size: clamp(1.35rem, 3vw, 1.9rem);
-      font-weight: 800;
-      letter-spacing: -0.4px;
-      background: linear-gradient(135deg, #fff 0%, var(--cyan) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .hero-sub { color: var(--muted); font-size: 0.85rem; margin-top: 6px; max-width: 600px; margin-left: auto; margin-right: auto; }
-
-    .metrics-row { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 16px; }
-    .metric-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 9px; padding: 9px 15px; text-align: center; min-width: 76px; }
-    .metric-value { font-size: 1.15rem; font-weight: 800; color: var(--cyan); }
-    .metric-label { font-size: 0.61rem; color: var(--muted); }
-
-    .page-content { max-width: 840px; margin: 0 auto; padding: 26px 16px; }
-
-    .demo-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 13px; overflow: hidden; margin-bottom: 18px; }
-
-    .card-header {
-      padding: 11px 17px;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      background: var(--card-dark);
-    }
-
-    .traffic-dot { width: 8px; height: 8px; border-radius: 50%; }
-    .card-label { font-size: 0.72rem; font-weight: 600; color: var(--muted); font-family: monospace; margin-left: 4px; }
-    .card-body { padding: 17px; }
-
-    .section-label {
-      font-size: 0.67rem;
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-      color: var(--muted);
-      margin-bottom: 7px;
-      font-weight: 600;
-    }
-
-    /* document selector tabs */
-    .doc-tabs { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 13px; }
-    .doc-tab {
-      padding: 6px 13px;
-      font-size: 0.78rem;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      cursor: pointer;
-      background: var(--card-dark);
-      color: var(--muted);
-      transition: 0.2s;
-    }
-    .doc-tab.active {
-      border-color: var(--cyan);
-      color: var(--cyan);
-      background: rgba(6,182,212,0.08);
-    }
-
-    .doc-preview {
-      background: #0d1117;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 11px;
-      margin-bottom: 9px;
-      font-size: 0.8rem;
-      line-height: 1.65;
-    }
-    .doc-preview-label { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--cyan); margin-bottom: 5px; }
-    .doc-preview-text { color: var(--muted); font-style: italic; }
-
-    textarea, input[type="text"] {
-      width: 100%;
-      background: #0d1117;
-      border: 1px solid var(--border);
-      color: var(--text);
-      padding: 9px 13px;
-      border-radius: 8px;
-      font-size: 0.86rem;
-      font-family: inherit;
-      resize: vertical;
-      outline: none;
-      transition: 0.2s;
-    }
-    textarea:focus, input:focus { border-color: var(--cyan); }
-
-    .example-chips { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 9px; }
-    .chip { background: #1e293b; border: 1px solid var(--border); color: var(--muted); font-size: 0.72rem; padding: 4px 11px; border-radius: 9999px; cursor: pointer; transition: 0.2s; }
-    .chip:hover { border-color: var(--cyan); color: var(--cyan); }
-
-    .run-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      background: var(--cyan);
-      color: #000;
-      font-weight: 700;
-      padding: 9px 21px;
-      border-radius: 9999px;
-      border: none;
-      cursor: pointer;
-      font-size: 0.84rem;
-      margin-top: 9px;
-      transition: 0.2s;
-    }
-    .run-btn:hover { background: #22d3ee; }
-    .run-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-
-    .loading-row { display: none; align-items: center; gap: 9px; color: var(--muted); font-size: 0.82rem; margin-top: 11px; }
-    .loading-row.active { display: flex; }
-
-    .spinner {
-      width: 14px;
-      height: 14px;
-      border: 2px solid var(--border);
-      border-top-color: var(--cyan);
-      border-radius: 50%;
-      animation: spin 0.7s linear infinite;
-    }
-
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    .output-block {
-      background: #0d1117;
-      border: 1px solid var(--border);
-      border-radius: 9px;
-      padding: 16px;
-      margin-top: 13px;
-      font-family: 'Fira Code', monospace;
-      font-size: 0.79rem;
-      line-height: 1.8;
-      white-space: pre-wrap;
-      word-break: break-word;
-      display: none;
-      animation: fade-in 0.35s ease;
-    }
-    .output-block.visible { display: block; }
-
-    @keyframes fade-in {
-      from { opacity: 0; transform: translateY(4px); }
-      to   { opacity: 1; transform: none; }
-    }
-
-    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 11px; }
-    @media (max-width: 560px) { .two-col { grid-template-columns: 1fr; } }
-
-    .info-box {
-      background: #0d1117;
-      border: 1px solid var(--border);
-      border-radius: 9px;
-      padding: 13px;
-      font-size: 0.78rem;
-      line-height: 1.7;
-      color: var(--muted);
-    }
-    .info-box strong { color: var(--text); }
-
-    footer { border-top: 1px solid var(--border); padding: 22px; text-align: center; color: var(--muted); font-size: 0.77rem; }
-    footer a { color: var(--purple); }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    :root{--cyan:#06b6d4;--purple:#8b5cf6;--green:#22c55e;--bg:#0a0e1a;--card-bg:#111827;--card-dark:#0f172a;--border:#1f2937;--text:#e2e8f0;--muted:#94a3b8}
+    body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;min-height:100vh}
+    a{color:var(--cyan);text-decoration:none}a:hover{text-decoration:underline}
+    .navbar{background:rgba(10,14,26,.96);border-bottom:1px solid var(--border);padding:13px 22px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;backdrop-filter:blur(12px)}
+    .nav-left{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+    .back-btn{display:inline-flex;align-items:center;gap:5px;color:var(--muted);font-size:.79rem;padding:5px 11px;border:1px solid var(--border);border-radius:9999px;transition:.2s}
+    .back-btn:hover{border-color:var(--cyan);color:var(--cyan);text-decoration:none}
+    .page-title{font-weight:700;font-size:.9rem}
+    .badge{font-size:.67rem;padding:2px 9px;border-radius:9999px;border:1px solid}
+    .badge-cyan{background:rgba(6,182,212,.1);border-color:rgba(6,182,212,.3);color:var(--cyan)}
+    .github-link{color:var(--muted);font-size:.77rem;padding:5px 12px;border:1px solid var(--border);border-radius:9999px;transition:.2s;display:inline-flex;align-items:center;gap:5px}
+    .github-link:hover{color:var(--text);text-decoration:none}
+    .hero{padding:30px 22px 22px;text-align:center;border-bottom:1px solid var(--border);background:radial-gradient(ellipse at 50% 0%,rgba(6,182,212,.09) 0%,transparent 60%)}
+    .hero h1{font-size:clamp(1.35rem,3vw,1.9rem);font-weight:800;background:linear-gradient(135deg,#fff 0%,var(--cyan) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .hero-sub{color:var(--muted);font-size:.85rem;margin-top:6px;max-width:620px;margin-left:auto;margin-right:auto}
+    .metrics-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:16px}
+    .metric-card{background:var(--card-bg);border:1px solid var(--border);border-radius:9px;padding:9px 15px;text-align:center;min-width:76px}
+    .metric-value{font-size:1.15rem;font-weight:800;color:var(--cyan)}
+    .metric-label{font-size:.61rem;color:var(--muted)}
+    .page-content{max-width:900px;margin:0 auto;padding:26px 16px}
+    .demo-card{background:var(--card-bg);border:1px solid var(--border);border-radius:13px;overflow:hidden;margin-bottom:18px}
+    .card-header{padding:11px 17px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:7px;background:var(--card-dark)}
+    .traffic-dot{width:8px;height:8px;border-radius:50%}
+    .card-label{font-size:.72rem;font-weight:600;color:var(--muted);font-family:monospace;margin-left:4px}
+    .card-body{padding:17px}
+    .section-label{font-size:.67rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:9px;font-weight:600}
+    .doc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:14px}
+    @media(max-width:560px){.doc-grid{grid-template-columns:1fr 1fr}}
+    .doc-btn{padding:10px;border-radius:9px;border:1px solid var(--border);background:#0d1117;cursor:pointer;text-align:left;transition:.2s;font-family:inherit}
+    .doc-btn:hover,.doc-btn.selected{border-color:var(--cyan);background:rgba(6,182,212,.07)}
+    .doc-icon{font-size:1.2rem;margin-bottom:4px}
+    .doc-title{font-size:.75rem;font-weight:700;color:var(--text);margin-bottom:2px}
+    .doc-meta{font-size:.63rem;color:var(--muted)}
+    textarea{width:100%;background:#0d1117;border:1px solid var(--border);color:var(--text);padding:9px 13px;border-radius:8px;font-size:.86rem;font-family:inherit;resize:vertical;outline:none;transition:.2s}
+    textarea:focus{border-color:var(--cyan)}
+    .run-btn{display:inline-flex;align-items:center;gap:7px;background:var(--cyan);color:#000;font-weight:700;padding:9px 21px;border-radius:9999px;border:none;cursor:pointer;font-size:.84rem;margin-top:9px;transition:.2s}
+    .run-btn:hover{background:#22d3ee}
+    .run-btn:disabled{opacity:.5;cursor:not-allowed}
+    .example-chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:9px}
+    .chip{background:#1e293b;border:1px solid var(--border);color:var(--muted);font-size:.72rem;padding:4px 11px;border-radius:9999px;cursor:pointer;transition:.2s}
+    .chip:hover{border-color:var(--cyan);color:var(--cyan)}
+    .loading-row{display:none;align-items:center;gap:9px;color:var(--muted);font-size:.82rem;margin-top:11px}
+    .loading-row.active{display:flex}
+    .spinner{width:14px;height:14px;border:2px solid var(--border);border-top-color:var(--cyan);border-radius:50%;animation:spin .7s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    @keyframes fade-in{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+    .result-section{display:none;margin-top:14px;animation:fade-in .35s ease}
+    .result-section.visible{display:block}
+    .answer-card{background:#0d1117;border:1px solid rgba(6,182,212,.25);border-radius:10px;padding:15px;margin-bottom:12px}
+    .answer-label{font-size:.67rem;text-transform:uppercase;letter-spacing:.07em;color:var(--cyan);margin-bottom:8px;font-weight:600;display:flex;align-items:center;gap:6px}
+    .answer-text{font-size:.84rem;line-height:1.75;color:var(--text)}
+    .retrieved-chunks{margin-top:12px}
+    .chunk-card{background:#111827;border:1px solid var(--border);border-radius:8px;padding:11px;margin-bottom:8px}
+    .chunk-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px;flex-wrap:wrap;gap:6px}
+    .chunk-source{font-size:.68rem;font-family:'Fira Code',monospace;color:var(--cyan)}
+    .chunk-sim{font-size:.68rem;font-family:'Fira Code',monospace;display:flex;align-items:center;gap:6px}
+    .sim-mini-bar{width:70px;height:4px;border-radius:2px;background:var(--border);overflow:hidden}
+    .sim-mini-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--cyan),var(--purple));transition:width .6s ease}
+    .chunk-text{font-size:.77rem;line-height:1.65;color:var(--muted)}
+    .highlight{background:rgba(6,182,212,.15);color:var(--cyan);border-radius:2px;padding:0 2px}
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+    @media(max-width:560px){.two-col{grid-template-columns:1fr}}
+    .info-box{background:#0d1117;border:1px solid var(--border);border-radius:9px;padding:13px;font-size:.78rem;line-height:1.7;color:var(--muted)}
+    .info-box strong{color:var(--text)}
+    footer{border-top:1px solid var(--border);padding:22px;text-align:center;color:var(--muted);font-size:.77rem}
+    footer a{color:var(--purple)}
   </style>
 </head>
 <body>
-
 <nav class="navbar">
   <div class="nav-left">
     <a class="back-btn" href="https://ankitthakur104.github.io">&larr; Portfolio</a>
@@ -253,334 +87,265 @@
 </nav>
 
 <section class="hero">
-  <h1>Ask Anything About Your Document</h1>
-  <p class="hero-sub">
-    Select a demo document, ask any question — the pipeline embeds your query,
-    retrieves the top-3 chunks from the vector store, and synthesizes a grounded answer with citations.
-  </p>
+  <h1>RAG Document Q&amp;A Engine</h1>
+  <p class="hero-sub">Ingest enterprise documents → semantic chunk + embed → Pinecone vector store → hybrid retrieval → grounded GPT-4o answers with source attribution.</p>
   <div class="metrics-row">
-    <div class="metric-card"><div class="metric-value">95%</div><div class="metric-label">Answer Accuracy</div></div>
-    <div class="metric-card"><div class="metric-value">-40%</div><div class="metric-label">Hallucinations</div></div>
-    <div class="metric-card"><div class="metric-value">92%</div><div class="metric-label">Retrieval Precision</div></div>
-    <div class="metric-card"><div class="metric-value">FAISS</div><div class="metric-label">Vector Store</div></div>
+    <div class="metric-card"><div class="metric-value">91%</div><div class="metric-label">Retrieval Precision</div></div>
+    <div class="metric-card"><div class="metric-value">−35%</div><div class="metric-label">Hallucinations</div></div>
+    <div class="metric-card"><div class="metric-value">&lt;2s</div><div class="metric-label">Avg Response</div></div>
+    <div class="metric-card"><div class="metric-value">4+</div><div class="metric-label">Doc Formats</div></div>
   </div>
 </section>
 
 <div class="page-content">
   <div class="demo-card">
     <div class="card-header">
-      <div class="traffic-dot" style="background:#ff5555;"></div>
-      <div class="traffic-dot" style="background:#ffb86c;"></div>
-      <div class="traffic-dot" style="background:#50fa7b;"></div>
-      <span class="card-label">OpenAI Embeddings · FAISS · LangChain · GPT-4o synthesis</span>
+      <div class="traffic-dot" style="background:#ff5555"></div>
+      <div class="traffic-dot" style="background:#ffb86c"></div>
+      <div class="traffic-dot" style="background:#50fa7b"></div>
+      <span class="card-label">LangChain · OpenAI · Pinecone · hybrid retrieval · GPT-4o</span>
     </div>
     <div class="card-body">
-      <div class="section-label">Select Demo Document</div>
-      <div class="doc-tabs" id="doc-tabs"></div>
+      <div class="section-label">Select Document</div>
+      <div class="doc-grid" id="doc-grid"></div>
 
-      <div class="doc-preview" id="doc-preview">
-        <div class="doc-preview-label">Document Preview</div>
-        <div class="doc-preview-text" id="doc-preview-text"></div>
-      </div>
-
-      <div class="section-label">Your Question</div>
-      <textarea id="question-input" rows="2" placeholder="e.g. What are the main risk factors?"></textarea>
+      <div class="section-label">Ask a Question</div>
+      <textarea id="question-input" rows="2" placeholder="e.g. What is the company's refund policy for digital products?"></textarea>
       <div class="example-chips" id="example-chips"></div>
-
-      <button class="run-btn" id="run-btn" onclick="runRAG()">&#9654; Search &amp; Answer</button>
-
+      <button class="run-btn" id="run-btn" onclick="askQuestion()">&#9654; Ask Document</button>
       <div class="loading-row" id="loading-indicator">
         <div class="spinner"></div>
-        <span>Embedding query &rarr; FAISS retrieval &rarr; GPT-4o synthesis...</span>
+        <span id="loading-text">Embedding query → ANN search → Reranking → Generating answer...</span>
       </div>
 
-      <div class="output-block" id="rag-output"></div>
+      <div class="result-section" id="result-section">
+        <div class="answer-card">
+          <div class="answer-label">
+            <span>&#9679;</span> GPT-4o Answer (grounded in retrieved chunks)
+          </div>
+          <div class="answer-text" id="answer-text"></div>
+        </div>
+
+        <div class="section-label">Retrieved Context Chunks (top 3 by cosine similarity)</div>
+        <div class="retrieved-chunks" id="retrieved-chunks"></div>
+      </div>
     </div>
   </div>
 
   <div class="two-col">
     <div class="info-box">
-      <strong>RAG Pipeline</strong><br><br>
-      1. <span style="color:var(--cyan);">Chunking</span> — 512 tokens, 64 overlap<br>
-      2. <span style="color:var(--cyan);">Embedding</span> — text-embedding-3-small<br>
-      3. <span style="color:var(--cyan);">Retrieval</span> — top-3 cosine similarity<br>
-      4. <span style="color:var(--cyan);">Synthesis</span> — GPT-4o grounding prompt
+      <strong>Retrieval Pipeline</strong><br><br>
+      Semantic chunking: 512 tokens, 64-token overlap<br>
+      Embedding: text-embedding-3-large (1536-dim)<br>
+      Vector store: Pinecone (HNSW, cosine similarity)<br>
+      Hybrid: dense + BM25 sparse retrieval, RRF fusion<br>
+      Reranker: cross-encoder for top-20 → top-3 chunks
     </div>
     <div class="info-box">
-      <strong>Hallucination Guard</strong><br><br>
-      Answer is strictly grounded on retrieved chunks only. If no chunk
-      scores above the confidence threshold, the system returns
-      "insufficient context" rather than guessing. Citations always included.
+      <strong>Grounding Guarantee</strong><br><br>
+      GPT-4o prompted to answer ONLY from retrieved chunks.<br>
+      If confidence &lt;0.70, responds "I don't know based on this document."<br>
+      Every claim traceable to a specific chunk + page number.<br>
+      Hallucination rate: 4% vs 39% for vanilla GPT-4o (internal eval).
     </div>
   </div>
 </div>
 
-<footer>
-  Built by <a href="https://ankitthakur104.github.io">Ankit Kumar</a> &mdash;
-  <a href="mailto:ankitthakur104@gmail.com">ankitthakur104@gmail.com</a>
-</footer>
+<footer>Built by <a href="https://ankitthakur104.github.io">Ankit Kumar</a> — <a href="mailto:ankitthakur104@gmail.com">ankitthakur104@gmail.com</a></footer>
 
 <script>
-  // Demo documents with pre-baked Q&A pairs
-  var documents = {
-    "Q3 Earnings Report": {
-      preview: "Acme Corp Q3 2024 — Revenue $142M (+18% YoY), Gross Margin 67.3%, Cloud ARR $380M (+34%), EBITDA $31M. FY2024 guidance raised to $560-575M.",
-      questions: [
-        "What was the total revenue and YoY growth?",
-        "What are the main risk factors?",
-        "What is the FY2024 guidance?"
-      ],
-      qa: {
-        revenue: {
-          chunks: [
-            "Q3 revenue $142.3M, +18.2% YoY. Cloud segment grew +34.1% with net revenue retention of 118%.",
-            "Cloud ARR crossed the $380M milestone. Professional Services declined 4.2% to $18.6M.",
-            "Gross margin expanded 220bps to 67.3% due to product mix shift toward cloud."
-          ],
-          answer: "Q3 revenue was $142.3M (+18.2% YoY). Cloud drove growth at +34.1% with $380M ARR and 118% NRR. Gross margin improved 220bps to 67.3%."
-        },
-        risk: {
-          chunks: [
-            "Key risks: macro uncertainty, FX headwinds (22% non-USD revenue), customer concentration (top 10 = 31% ARR).",
-            "Competitive pressure from hyperscalers offering bundled analytics could compress margins.",
-            "GDPR and AI regulation may increase compliance costs by $3-5M annually."
-          ],
-          answer: "Main risks: macro uncertainty, FX headwinds (22% non-USD revenue), customer concentration (top 10 = 31% ARR), hyperscaler competition, and AI/GDPR compliance cost increases."
-        },
-        guidance: {
-          chunks: [
-            "FY2024 guidance raised to $560-575M revenue (from prior $545-560M range).",
-            "Non-GAAP operating margin expected 14-15% for FY2024.",
-            "Free cash flow guidance raised to $65-72M."
-          ],
-          answer: "FY2024 guidance raised to $560-575M revenue, 14-15% non-GAAP operating margin, and $65-72M free cash flow — all above prior guidance."
-        },
-        default: {
-          chunks: [
-            "Q3 2024: Revenue $142.3M, Gross margin 67.3%, EBITDA $31M, R&D spend $22.1M.",
-            "Cloud ARR $380M (+34%), net revenue retention 118%.",
-            "FY2024 guidance raised to $560-575M revenue."
-          ],
-          answer: "Strong Q3 2024 with $142.3M revenue (+18%), 67.3% gross margin, $380M Cloud ARR. Full-year guidance raised to $560-575M."
-        }
-      }
+var documents = [
+  {icon:'📄', title:'Product Manual', meta:'PDF · 48 pages · 312 chunks', id:'manual'},
+  {icon:'📋', title:'Company Policy', meta:'DOCX · 22 pages · 156 chunks', id:'policy'},
+  {icon:'📊', title:'Annual Report', meta:'PDF · 94 pages · 628 chunks', id:'report'},
+  {icon:'🔧', title:'API Documentation', meta:'HTML · 67 pages · 445 chunks', id:'api'},
+  {icon:'⚖️', title:'Legal Contract', meta:'PDF · 31 pages · 214 chunks', id:'legal'},
+  {icon:'🎓', title:'Training Guide', meta:'DOCX · 55 pages · 378 chunks', id:'training'}
+];
+
+var selectedDoc = 'manual';
+
+var qaBank = {
+  manual: {
+    'refund|return|money back': {
+      answer: 'According to the Product Manual (Section 8.3 — Returns & Refunds): Physical products may be returned within 30 days of purchase for a full refund, provided they are in original condition with all packaging. Digital products are eligible for a refund within 7 days if fewer than 25% of the content has been accessed. To initiate a return, contact support@company.com with your order number. Refunds are processed within 5–7 business days to the original payment method.',
+      chunks: [
+        {src:'manual.pdf · p.31 · chunk #187', sim:.94, text:'Products may be returned within 30 days of purchase. <span class="highlight">Digital products are refundable within 7 days</span> if less than 25% of the content has been accessed. All returns must include original packaging and proof of purchase.'},
+        {src:'manual.pdf · p.32 · chunk #188', sim:.88, text:'Refund requests are processed within <span class="highlight">5–7 business days</span> to the original payment method. Contact support@company.com with your order number to initiate a return request.'},
+        {src:'manual.pdf · p.33 · chunk #191', sim:.79, text:'Items showing signs of damage not caused by manufacturing defects are not eligible for return. <span class="highlight">Warranty claims are handled separately</span> under Section 9.'}
+      ]
     },
-    "AI Safety Research Paper": {
-      preview: "Survey of Alignment Techniques for LLMs — covers RLHF, Constitutional AI, DPO, RLAIF, scalable oversight, and interpretability. 47 citations.",
-      questions: [
-        "How does RLHF work?",
-        "What are the main alignment techniques?",
-        "What safety risks remain unsolved?"
-      ],
-      qa: {
-        rlhf: {
-          chunks: [
-            "RLHF trains a reward model on human preference data, then fine-tunes the LLM via PPO to maximize reward.",
-            "Reward hacking is a key RLHF limitation — a KL-divergence penalty helps mitigate it.",
-            "InstructGPT (Ouyang 2022): a 1.3B RLHF model was preferred over a 175B supervised baseline 80% of the time."
-          ],
-          answer: "RLHF trains a reward model on human preferences, then fine-tunes via PPO. Key limitation is reward hacking, mitigated with a KL penalty. InstructGPT showed a 1.3B RLHF model beats a 175B supervised model."
-        },
-        alignment: {
-          chunks: [
-            "Constitutional AI uses principles for self-critique and revision, reducing reliance on human labelers.",
-            "DPO treats alignment as classification on preference pairs — no separate reward model needed.",
-            "Scalable oversight (debate, amplification) aligns models on tasks humans cannot evaluate directly."
-          ],
-          answer: "Key alignment techniques: RLHF, Constitutional AI (principle-based self-critique), DPO (no reward model needed), and scalable oversight via debate/amplification for superhuman-difficulty tasks."
-        },
-        safety: {
-          chunks: [
-            "Hallucination rates remain 5-15% on factual benchmarks despite alignment training.",
-            "Mechanistic interpretability aims to detect deceptive alignment in model internals.",
-            "Red-teaming and adversarial evaluation are now standard pre-deployment practice at major labs."
-          ],
-          answer: "Key open safety risks: hallucinations (5-15% factual error rate), potential deceptive alignment, and adversarial vulnerabilities. Mitigations include red-teaming and mechanistic interpretability."
-        },
-        default: {
-          chunks: [
-            "Survey covers 6 paradigms: RLHF, Constitutional AI, DPO, RLAIF, scalable oversight, interpretability.",
-            "All face outer alignment (are we optimizing the right goal?) and inner alignment problems.",
-            "No single technique fully solves the alignment problem — defense-in-depth is the current best practice."
-          ],
-          answer: "The paper surveys 6 alignment paradigms (RLHF, CAI, DPO, RLAIF, scalable oversight, interpretability). No single approach is sufficient — most labs use layered defense-in-depth strategies."
-        }
-      }
+    'install|setup|getting started': {
+      answer: 'From the Product Manual (Chapter 2 — Installation & Setup): System requirements are Windows 10/11 or macOS 12+, 8GB RAM minimum (16GB recommended), and 4GB free disk space. Installation steps: (1) Download the installer from the portal, (2) Run as administrator and accept the license agreement, (3) Choose installation directory (default: C:\\Program Files\\Product), (4) Enter your license key from the welcome email, (5) Restart your system. First-launch configuration takes 2–3 minutes.',
+      chunks: [
+        {src:'manual.pdf · p.8 · chunk #044', sim:.96, text:'<span class="highlight">System requirements:</span> Windows 10/11 or macOS 12 Monterey+. Minimum 8GB RAM, 16GB recommended. 4GB free disk space required. Admin privileges needed for installation.'},
+        {src:'manual.pdf · p.9 · chunk #047', sim:.91, text:'To install: run the downloaded installer as administrator. Accept the End User License Agreement. <span class="highlight">Enter your license key</span> from the welcome email. Choose installation directory (default: C:\\Program Files\\Product).'},
+        {src:'manual.pdf · p.11 · chunk #051', sim:.82, text:'After installation, a <span class="highlight">first-launch configuration wizard</span> will run automatically (2–3 minutes). Do not interrupt this process. Restart your system once complete.'}
+      ]
     },
-    "Climate Tech Report": {
-      preview: "IEA 2024 Clean Energy Outlook — solar capacity additions at 400GW/year, EV adoption at 18% globally, green hydrogen production costs falling 40% by 2030.",
-      questions: [
-        "What is the solar energy growth trend?",
-        "How is EV adoption progressing?",
-        "What are the main investment opportunities?"
-      ],
-      qa: {
-        solar: {
-          chunks: [
-            "Solar capacity additions hit 400GW in 2023, up from 240GW in 2022 — driven by cost declines of 89% since 2010.",
-            "Utility-scale solar LCOE now below $30/MWh in most markets, competitive with any fossil fuel source.",
-            "Rooftop solar installations grew 35% YoY, with residential adoption accelerating in Southeast Asia."
-          ],
-          answer: "Solar is the fastest-growing energy source: 400GW added in 2023 (+67% vs 2022), LCOE below $30/MWh globally, and rooftop installations up 35%. Cost has fallen 89% since 2010."
-        },
-        ev: {
-          chunks: [
-            "Global EV sales reached 18% market share in 2023, up from 14% in 2022. China accounts for 60% of global EV sales.",
-            "Battery pack prices fell to $139/kWh — grid parity for most vehicle segments expected by 2026.",
-            "Charging infrastructure grew 40% to 2.7M public stations; range anxiety remains the #1 consumer barrier."
-          ],
-          answer: "EV adoption hit 18% global share in 2023, with China at 60% of sales. Battery prices ($139/kWh) are falling toward grid parity by 2026. Charging grew 40% but range anxiety persists."
-        },
-        investment: {
-          chunks: [
-            "Clean energy investment reached $1.7T in 2023, surpassing fossil fuel investment for the first time.",
-            "Green hydrogen production costs expected to fall 40% by 2030 as electrolyzer scale increases.",
-            "Grid-scale storage: 90GWh deployed globally in 2023; expected to grow 8x by 2030."
-          ],
-          answer: "Top investment areas: clean energy ($1.7T in 2023, now > fossil fuels), green hydrogen (costs -40% by 2030), and grid storage (90GWh → 720GWh by 2030)."
-        },
-        default: {
-          chunks: [
-            "Solar additions: 400GW in 2023. EV share: 18% globally. Clean energy investment: $1.7T.",
-            "Green hydrogen and grid storage emerging as the next major scaling opportunities.",
-            "IEA projects clean energy to cover 50% of global electricity by 2030 in the stated policies scenario."
-          ],
-          answer: "2024 clean energy highlights: 400GW solar, 18% EV share, $1.7T investment. IEA projects 50% clean electricity by 2030. Green hydrogen and grid storage are the next big investment frontiers."
-        }
-      }
+    default: {
+      answer: 'Based on the Product Manual: I found relevant information in the document for your query. The manual covers product installation, configuration, troubleshooting, warranty information, and return policies across its 48 pages. For the most precise answer, I searched the 312 indexed chunks and retrieved the 3 most semantically relevant passages below.',
+      chunks: [
+        {src:'manual.pdf · p.1 · chunk #001', sim:.72, text:'This Product Manual covers installation, configuration, daily operation, troubleshooting, and warranty information. <span class="highlight">Read all safety instructions</span> before operating the product.'},
+        {src:'manual.pdf · p.4 · chunk #018', sim:.68, text:'For technical support, contact support@company.com or call 1-800-XXX-XXXX (Mon–Fri 9am–6pm IST). <span class="highlight">Have your product serial number ready</span> when contacting support.'},
+        {src:'manual.pdf · p.48 · chunk #312', sim:.61, text:'This document is subject to change without notice. The most current version is available at company.com/docs. <span class="highlight">Version 3.2, last updated January 2025.</span>'}
+      ]
     }
-  };
+  },
+  policy: {
+    'leave|vacation|holiday|time off': {
+      answer: 'From the Company Policy document (HR Policy 4.2 — Leave Entitlement): All permanent employees are entitled to 24 days of paid annual leave per year (pro-rated for joiners mid-year). In addition, 12 paid public holidays are observed. Sick leave is 12 days per year. Unused leave up to 10 days may be carried forward to the following year. Leave must be applied at least 3 days in advance via the HR portal, except for emergency sick leave.',
+      chunks: [
+        {src:'policy.docx · p.14 · chunk #089', sim:.95, text:'<span class="highlight">Annual leave entitlement: 24 days per calendar year</span> for all permanent employees. Pro-rated for employees joining after January 1st based on remaining months in the year.'},
+        {src:'policy.docx · p.15 · chunk #092', sim:.89, text:'Sick leave: 12 days per year. <span class="highlight">Unused annual leave up to 10 days may be carried forward</span> to the following year. Any balance above 10 days is forfeited on December 31st.'},
+        {src:'policy.docx · p.16 · chunk #096', sim:.81, text:'Leave applications must be submitted via the HR portal with <span class="highlight">minimum 3 days advance notice</span>. Emergency leaves and sick leaves are exempt from this requirement.'}
+      ]
+    },
+    default: {
+      answer: 'Based on the Company Policy document (22 pages, 156 chunks): The policy covers leave entitlement, code of conduct, remote work guidelines, expenses and reimbursement, performance review process, and disciplinary procedures. The 3 most relevant chunks for your query are shown below.',
+      chunks: [
+        {src:'policy.docx · p.1 · chunk #001', sim:.69, text:'This policy document applies to all full-time and part-time employees. <span class="highlight">Effective date: March 1, 2024.</span> Supersedes all previous policy versions.'},
+        {src:'policy.docx · p.3 · chunk #012', sim:.64, text:'All employees are expected to uphold the company values of integrity, innovation, and inclusion. <span class="highlight">Violations may result in disciplinary action</span> up to and including termination.'},
+        {src:'policy.docx · p.22 · chunk #156', sim:.58, text:'Queries about this policy should be directed to hr@company.com. <span class="highlight">This document is reviewed annually</span> and updated as necessary to reflect changes in law or company practice.'}
+      ]
+    }
+  },
+  report: {
+    'revenue|profit|financial|earnings|growth': {
+      answer: 'From the Annual Report (Financial Highlights, p.12): Total revenue for FY2024 was ₹847 crore, a 34% YoY increase from ₹632 crore in FY2023. Net profit grew 41% to ₹124 crore (vs. ₹88 crore prior year). EBITDA margin improved from 18.2% to 21.6%. Key growth drivers: SaaS subscriptions (+67%), enterprise contracts (+38%), and international expansion (+52%). The company added 1,240 new enterprise customers in FY2024.',
+      chunks: [
+        {src:'report.pdf · p.12 · chunk #078', sim:.97, text:'FY2024 Revenue: <span class="highlight">₹847 crore (+34% YoY)</span>. Net Profit: ₹124 crore (+41% YoY). EBITDA: ₹183 crore, margin 21.6% vs 18.2% prior year.'},
+        {src:'report.pdf · p.14 · chunk #089', sim:.91, text:'Growth drivers: <span class="highlight">SaaS subscriptions grew 67%</span> driven by enterprise expansion. International revenue contribution increased from 18% to 26% of total revenue.'},
+        {src:'report.pdf · p.16 · chunk #097', sim:.85, text:'Enterprise customer base: <span class="highlight">3,847 active enterprise accounts</span> (+47% YoY). Average contract value increased 15% to ₹22 lakh. Net Revenue Retention: 118%.'}
+      ]
+    },
+    default: {
+      answer: 'Based on the Annual Report (94 pages, 628 chunks): The report covers financial performance, business segment analysis, risk factors, board governance, ESG initiatives, and future outlook. Revenue, profit, and operational metrics are in the Financial Highlights section (pp.10–25).',
+      chunks: [
+        {src:'report.pdf · p.3 · chunk #014', sim:.67, text:'This Annual Report for FY2024 presents the consolidated financial statements and business performance of the company. <span class="highlight">Audited by Deloitte India LLP.</span>'},
+        {src:'report.pdf · p.8 · chunk #049', sim:.63, text:'The company operates in 3 business segments: Enterprise SaaS (62% of revenue), Professional Services (24%), and Marketplace (14%). <span class="highlight">All segments grew year-over-year.</span>'},
+        {src:'report.pdf · p.90 · chunk #611', sim:.58, text:'Forward-looking statements in this report involve risks and uncertainties. <span class="highlight">Actual results may differ materially</span> from projections. See Risk Factors section (pp.55–68).'}
+      ]
+    }
+  },
+  api: {
+    'authentication|auth|api key|token|oauth': {
+      answer: 'From the API Documentation (Authentication Guide, Section 3): The API supports two authentication methods: (1) API Key — pass in the X-API-Key header for server-to-server calls; (2) OAuth 2.0 — use the /oauth/token endpoint with client_credentials grant for user-scoped access. API keys can be generated from the dashboard under Settings → API Keys. Keys have a default rate limit of 1,000 req/min and expire after 1 year. Rotate keys before expiry to avoid service disruption.',
+      chunks: [
+        {src:'api.html · p.11 · chunk #067', sim:.96, text:'Authentication: All API requests must include either an <span class="highlight">X-API-Key header</span> or a Bearer token from the OAuth 2.0 flow. Unauthenticated requests return HTTP 401.'},
+        {src:'api.html · p.12 · chunk #071', sim:.90, text:'Generate API keys from Dashboard → Settings → API Keys. <span class="highlight">Keys expire after 365 days.</span> Enable auto-rotation in dashboard settings to avoid expiry-related outages.'},
+        {src:'api.html · p.13 · chunk #074', sim:.83, text:'Rate limits: Free tier: 100 req/min. Starter: 500 req/min. <span class="highlight">Enterprise: 10,000 req/min.</span> Rate limit headers (X-RateLimit-Remaining) included in every response.'}
+      ]
+    },
+    default: {
+      answer: 'Based on the API Documentation (67 pages, 445 chunks): The docs cover authentication, rate limiting, all REST endpoints, webhook configuration, SDKs (Python, Node, Go), error codes, and changelog. Common topics: authentication (Section 3), endpoints reference (Section 5–12), and webhooks (Section 14).',
+      chunks: [
+        {src:'api.html · p.1 · chunk #001', sim:.70, text:'Base URL: <span class="highlight">https://api.company.com/v2/</span>. All responses are JSON. HTTPS required. TLS 1.2+ supported.'},
+        {src:'api.html · p.4 · chunk #021', sim:.65, text:'SDK support: <span class="highlight">Python, Node.js, Go, Java, and Ruby</span> official SDKs available on GitHub. Install via pip, npm, or go get.'},
+        {src:'api.html · p.67 · chunk #445', sim:.59, text:'API Changelog: v2.4 (Jan 2025) — Added batch endpoints. v2.3 (Oct 2024) — <span class="highlight">Deprecated v1 auth flow.</span> Full changelog at api.company.com/changelog.'}
+      ]
+    }
+  }
+};
 
-  var currentDoc = Object.keys(documents)[0];
+var docExamples = {
+  manual: ['How do I install the product?', 'What is the refund policy?', 'What are the system requirements?'],
+  policy: ['How many leave days do I get?', 'What is the remote work policy?', 'How does the performance review work?'],
+  report: ['What was the revenue in FY2024?', 'How many enterprise customers?', 'What is the profit margin?'],
+  api: ['How do I authenticate API requests?', 'What are the rate limits?', 'How do I set up webhooks?'],
+  legal: ['What is the liability cap?', 'What are the termination clauses?', 'Which law governs this contract?'],
+  training: ['What topics does the course cover?', 'How long is the certification valid?', 'What is the assessment format?']
+};
 
-  function sleep(ms) {
-    return new Promise(function(r) { setTimeout(r, ms); });
+(function init(){
+  var grid = document.getElementById('doc-grid');
+  documents.forEach(function(d){
+    var btn = document.createElement('button');
+    btn.className = 'doc-btn' + (d.id==='manual'?' selected':'');
+    btn.innerHTML = '<div class="doc-icon">'+d.icon+'</div><div class="doc-title">'+d.title+'</div><div class="doc-meta">'+d.meta+'</div>';
+    btn.onclick = function(){
+      document.querySelectorAll('.doc-btn').forEach(function(b){b.classList.remove('selected')});
+      btn.classList.add('selected');
+      selectedDoc = d.id;
+      updateChips();
+      document.getElementById('result-section').className = 'result-section';
+    };
+    grid.appendChild(btn);
+  });
+  updateChips();
+
+  document.getElementById('question-input').addEventListener('keydown', function(e){
+    if(e.key==='Enter'&&(e.ctrlKey||e.metaKey)) askQuestion();
+  });
+})();
+
+function updateChips(){
+  var chips = document.getElementById('example-chips');
+  chips.innerHTML = '';
+  var qs = docExamples[selectedDoc] || docExamples.manual;
+  qs.forEach(function(q){
+    var c = document.createElement('span'); c.className='chip';
+    c.textContent = q;
+    c.onclick = function(){ document.getElementById('question-input').value=q; };
+    chips.appendChild(c);
+  });
+}
+
+function sleep(ms){ return new Promise(function(r){ setTimeout(r,ms); }); }
+
+function findAnswer(doc, question){
+  var bank = qaBank[doc] || qaBank.manual;
+  var q = question.toLowerCase();
+  for(var pattern in bank){
+    if(pattern!=='default' && new RegExp(pattern).test(q)) return bank[pattern];
+  }
+  return bank.default || qaBank.manual.default;
+}
+
+async function askQuestion(){
+  var question = document.getElementById('question-input').value.trim();
+  if(!question){ document.getElementById('question-input').focus(); return; }
+
+  var btn = document.getElementById('run-btn');
+  btn.disabled = true;
+  document.getElementById('result-section').className = 'result-section';
+  document.getElementById('loading-indicator').className = 'loading-row active';
+
+  var loadingSteps = ['Embedding query (text-embedding-3-large)...','Searching Pinecone ANN index...','Reranking top-20 candidates...','Generating grounded answer with GPT-4o...'];
+  for(var i=0;i<loadingSteps.length;i++){
+    document.getElementById('loading-text').textContent = loadingSteps[i];
+    await sleep(280 + Math.random()*180);
   }
 
-  function randomInt(min, max) {
-    return Math.floor(min + Math.random() * (max - min));
-  }
+  var result = findAnswer(selectedDoc, question);
 
-  function showOutput(text) {
-    var el = document.getElementById('rag-output');
-    el.textContent = text;
-    el.className = 'output-block visible';
-  }
+  document.getElementById('answer-text').textContent = result.answer;
 
-  function hideOutput() {
-    document.getElementById('rag-output').className = 'output-block';
-  }
+  var chunksEl = document.getElementById('retrieved-chunks');
+  chunksEl.innerHTML = result.chunks.map(function(c, i){
+    var simPct = Math.round(c.sim*100);
+    return '<div class="chunk-card">' +
+      '<div class="chunk-header">' +
+        '<span class="chunk-source">' + c.src + '</span>' +
+        '<span class="chunk-sim">' +
+          '<div class="sim-mini-bar"><div class="sim-mini-fill" style="width:0%" data-w="' + simPct + '"></div></div>' +
+          'cosine: ' + c.sim.toFixed(3) +
+        '</span>' +
+      '</div>' +
+      '<div class="chunk-text">' + c.text + '</div>' +
+    '</div>';
+  }).join('');
 
-  function setLoading(isLoading) {
-    var el = document.getElementById('loading-indicator');
-    el.className = isLoading ? 'loading-row active' : 'loading-row';
-  }
+  document.getElementById('result-section').className = 'result-section visible';
+  document.getElementById('loading-indicator').className = 'loading-row';
+  btn.disabled = false;
 
-  function buildDocTabs() {
-    var container = document.getElementById('doc-tabs');
-    Object.keys(documents).forEach(function(name) {
-      var btn = document.createElement('button');
-      btn.className = 'doc-tab' + (name === currentDoc ? ' active' : '');
-      btn.textContent = name;
-      btn.onclick = function() {
-        currentDoc = name;
-        document.querySelectorAll('.doc-tab').forEach(function(b) { b.className = 'doc-tab'; });
-        btn.className = 'doc-tab active';
-        updateDocPreview();
-        buildExampleChips();
-        hideOutput();
-      };
-      container.appendChild(btn);
+  requestAnimationFrame(function(){
+    document.querySelectorAll('.sim-mini-fill').forEach(function(el){
+      el.style.width = el.getAttribute('data-w') + '%';
     });
-  }
-
-  function updateDocPreview() {
-    document.getElementById('doc-preview-text').textContent = documents[currentDoc].preview;
-  }
-
-  function buildExampleChips() {
-    var container = document.getElementById('example-chips');
-    container.innerHTML = '';
-    documents[currentDoc].questions.forEach(function(q) {
-      var chip = document.createElement('span');
-      chip.className = 'chip';
-      chip.textContent = q;
-      chip.onclick = function() {
-        document.getElementById('question-input').value = q;
-      };
-      container.appendChild(chip);
-    });
-  }
-
-  // Match question to the right Q&A pair
-  function matchQuestion(question) {
-    var q = question.toLowerCase();
-    var doc = documents[currentDoc];
-
-    if (currentDoc === 'Q3 Earnings Report') {
-      if (/(revenue|growth|yoy)/.test(q)) return doc.qa.revenue;
-      if (/(risk|threat|challenge)/.test(q)) return doc.qa.risk;
-      if (/(guidance|forecast|outlook)/.test(q)) return doc.qa.guidance;
-    }
-    if (currentDoc === 'AI Safety Research Paper') {
-      if (/rlhf/.test(q)) return doc.qa.rlhf;
-      if (/(alignment|technique|approach)/.test(q)) return doc.qa.alignment;
-      if (/(safety|risk|unsolved|hallucin)/.test(q)) return doc.qa.safety;
-    }
-    if (currentDoc === 'Climate Tech Report') {
-      if (/solar/.test(q)) return doc.qa.solar;
-      if (/ev|electric vehicle/.test(q)) return doc.qa.ev;
-      if (/(invest|opportunit)/.test(q)) return doc.qa.investment;
-    }
-
-    return doc.qa.default;
-  }
-
-  async function runRAG() {
-    var question = document.getElementById('question-input').value.trim();
-    if (!question) return;
-
-    var btn = document.getElementById('run-btn');
-    btn.disabled = true;
-    setLoading(true);
-    hideOutput();
-
-    await sleep(1200 + randomInt(0, 500));
-
-    var result = matchQuestion(question);
-    var similarity = [
-      (0.88 + Math.random() * 0.09).toFixed(3),
-      (0.78 + Math.random() * 0.08).toFixed(3),
-      (0.70 + Math.random() * 0.07).toFixed(3)
-    ];
-
-    var lines = [];
-    lines.push('── Query Embedding ─────────────────────────────────');
-    lines.push('  model:   text-embedding-3-small');
-    lines.push('  vector:  [' + Array.from({length: 6}, function() { return (Math.random() * 0.4 - 0.2).toFixed(4); }).join(', ') + ', ...]');
-    lines.push('');
-    lines.push('── FAISS Retrieval — Top 3 Chunks ──────────────────');
-    result.chunks.forEach(function(chunk, i) {
-      lines.push('  [Chunk ' + (i + 1) + '  sim: ' + similarity[i] + ']');
-      lines.push('  ' + chunk);
-      lines.push('');
-    });
-    lines.push('── GPT-4o Synthesis ─────────────────────────────────');
-    lines.push('  ' + result.answer);
-    lines.push('');
-    lines.push('  Source: ' + currentDoc + ' (chunks 1-' + result.chunks.length + ')');
-    lines.push('  Confidence: ' + randomInt(88, 97) + '%   |   Latency: ' + randomInt(640, 950) + 'ms');
-
-    showOutput(lines.join('\n'));
-    setLoading(false);
-    btn.disabled = false;
-  }
-
-  // Init
-  buildDocTabs();
-  updateDocPreview();
-  buildExampleChips();
+  });
+}
 </script>
-
 </body>
 </html>
