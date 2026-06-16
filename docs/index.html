@@ -1,351 +1,491 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>RAG Document Intelligence – Live Demo</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-  <style>
-    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-    :root{--cyan:#06b6d4;--purple:#8b5cf6;--green:#22c55e;--bg:#0a0e1a;--card-bg:#111827;--card-dark:#0f172a;--border:#1f2937;--text:#e2e8f0;--muted:#94a3b8}
-    body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;min-height:100vh}
-    a{color:var(--cyan);text-decoration:none}a:hover{text-decoration:underline}
-    .navbar{background:rgba(10,14,26,.96);border-bottom:1px solid var(--border);padding:13px 22px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;backdrop-filter:blur(12px)}
-    .nav-left{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-    .back-btn{display:inline-flex;align-items:center;gap:5px;color:var(--muted);font-size:.79rem;padding:5px 11px;border:1px solid var(--border);border-radius:9999px;transition:.2s}
-    .back-btn:hover{border-color:var(--cyan);color:var(--cyan);text-decoration:none}
-    .page-title{font-weight:700;font-size:.9rem}
-    .badge{font-size:.67rem;padding:2px 9px;border-radius:9999px;border:1px solid}
-    .badge-cyan{background:rgba(6,182,212,.1);border-color:rgba(6,182,212,.3);color:var(--cyan)}
-    .github-link{color:var(--muted);font-size:.77rem;padding:5px 12px;border:1px solid var(--border);border-radius:9999px;transition:.2s;display:inline-flex;align-items:center;gap:5px}
-    .github-link:hover{color:var(--text);text-decoration:none}
-    .hero{padding:30px 22px 22px;text-align:center;border-bottom:1px solid var(--border);background:radial-gradient(ellipse at 50% 0%,rgba(6,182,212,.09) 0%,transparent 60%)}
-    .hero h1{font-size:clamp(1.35rem,3vw,1.9rem);font-weight:800;background:linear-gradient(135deg,#fff 0%,var(--cyan) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-    .hero-sub{color:var(--muted);font-size:.85rem;margin-top:6px;max-width:620px;margin-left:auto;margin-right:auto}
-    .metrics-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:16px}
-    .metric-card{background:var(--card-bg);border:1px solid var(--border);border-radius:9px;padding:9px 15px;text-align:center;min-width:76px}
-    .metric-value{font-size:1.15rem;font-weight:800;color:var(--cyan)}
-    .metric-label{font-size:.61rem;color:var(--muted)}
-    .page-content{max-width:900px;margin:0 auto;padding:26px 16px}
-    .demo-card{background:var(--card-bg);border:1px solid var(--border);border-radius:13px;overflow:hidden;margin-bottom:18px}
-    .card-header{padding:11px 17px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:7px;background:var(--card-dark)}
-    .traffic-dot{width:8px;height:8px;border-radius:50%}
-    .card-label{font-size:.72rem;font-weight:600;color:var(--muted);font-family:monospace;margin-left:4px}
-    .card-body{padding:17px}
-    .section-label{font-size:.67rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:9px;font-weight:600}
-    .doc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:14px}
-    @media(max-width:560px){.doc-grid{grid-template-columns:1fr 1fr}}
-    .doc-btn{padding:10px;border-radius:9px;border:1px solid var(--border);background:#0d1117;cursor:pointer;text-align:left;transition:.2s;font-family:inherit}
-    .doc-btn:hover,.doc-btn.selected{border-color:var(--cyan);background:rgba(6,182,212,.07)}
-    .doc-icon{font-size:1.2rem;margin-bottom:4px}
-    .doc-title{font-size:.75rem;font-weight:700;color:var(--text);margin-bottom:2px}
-    .doc-meta{font-size:.63rem;color:var(--muted)}
-    textarea{width:100%;background:#0d1117;border:1px solid var(--border);color:var(--text);padding:9px 13px;border-radius:8px;font-size:.86rem;font-family:inherit;resize:vertical;outline:none;transition:.2s}
-    textarea:focus{border-color:var(--cyan)}
-    .run-btn{display:inline-flex;align-items:center;gap:7px;background:var(--cyan);color:#000;font-weight:700;padding:9px 21px;border-radius:9999px;border:none;cursor:pointer;font-size:.84rem;margin-top:9px;transition:.2s}
-    .run-btn:hover{background:#22d3ee}
-    .run-btn:disabled{opacity:.5;cursor:not-allowed}
-    .example-chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:9px}
-    .chip{background:#1e293b;border:1px solid var(--border);color:var(--muted);font-size:.72rem;padding:4px 11px;border-radius:9999px;cursor:pointer;transition:.2s}
-    .chip:hover{border-color:var(--cyan);color:var(--cyan)}
-    .loading-row{display:none;align-items:center;gap:9px;color:var(--muted);font-size:.82rem;margin-top:11px}
-    .loading-row.active{display:flex}
-    .spinner{width:14px;height:14px;border:2px solid var(--border);border-top-color:var(--cyan);border-radius:50%;animation:spin .7s linear infinite}
-    @keyframes spin{to{transform:rotate(360deg)}}
-    @keyframes fade-in{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
-    .result-section{display:none;margin-top:14px;animation:fade-in .35s ease}
-    .result-section.visible{display:block}
-    .answer-card{background:#0d1117;border:1px solid rgba(6,182,212,.25);border-radius:10px;padding:15px;margin-bottom:12px}
-    .answer-label{font-size:.67rem;text-transform:uppercase;letter-spacing:.07em;color:var(--cyan);margin-bottom:8px;font-weight:600;display:flex;align-items:center;gap:6px}
-    .answer-text{font-size:.84rem;line-height:1.75;color:var(--text)}
-    .retrieved-chunks{margin-top:12px}
-    .chunk-card{background:#111827;border:1px solid var(--border);border-radius:8px;padding:11px;margin-bottom:8px}
-    .chunk-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px;flex-wrap:wrap;gap:6px}
-    .chunk-source{font-size:.68rem;font-family:'Fira Code',monospace;color:var(--cyan)}
-    .chunk-sim{font-size:.68rem;font-family:'Fira Code',monospace;display:flex;align-items:center;gap:6px}
-    .sim-mini-bar{width:70px;height:4px;border-radius:2px;background:var(--border);overflow:hidden}
-    .sim-mini-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--cyan),var(--purple));transition:width .6s ease}
-    .chunk-text{font-size:.77rem;line-height:1.65;color:var(--muted)}
-    .highlight{background:rgba(6,182,212,.15);color:var(--cyan);border-radius:2px;padding:0 2px}
-    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:11px}
-    @media(max-width:560px){.two-col{grid-template-columns:1fr}}
-    .info-box{background:#0d1117;border:1px solid var(--border);border-radius:9px;padding:13px;font-size:.78rem;line-height:1.7;color:var(--muted)}
-    .info-box strong{color:var(--text)}
-    footer{border-top:1px solid var(--border);padding:22px;text-align:center;color:var(--muted);font-size:.77rem}
-    footer a{color:var(--purple)}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document Intelligence & AI Extraction Platform — Ankit Kumar</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#07090f;--card:#0d1117;--card2:#111827;--border:#1f2937;--border2:#374151;--text:#f1f5f9;--muted:#6b7280;--dim:#9ca3af;--blue:#3b82f6;--purple:#8b5cf6;--green:#10b981;--amber:#f59e0b;--cyan:#06b6d4;--red:#ef4444;--orange:#f97316}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh;display:flex;flex-direction:column}
+code,pre,kbd{font-family:'Fira Code',monospace}
+a{color:var(--blue);text-decoration:none}
+
+.topbar{background:#0a0d14;border-bottom:1px solid var(--border);padding:0 24px;height:54px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:14px}
+.logo-icon{width:30px;height:30px;background:linear-gradient(135deg,var(--orange),var(--purple));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px}
+.badge-live{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--green);background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.25);border-radius:20px;padding:3px 10px}
+.pulse{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.topbar-links{display:flex;align-items:center;gap:16px;font-size:12px}
+.topbar-links a{color:var(--dim);transition:color .2s}.topbar-links a:hover{color:var(--text)}
+.topbar-links span{color:var(--muted)}
+
+.tech-bar{background:#090c14;border-bottom:1px solid var(--border);padding:8px 24px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.tech-pill{font-size:11px;padding:3px 10px;border-radius:12px;font-family:'Fira Code',monospace}
+.tp-blue{background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.2);color:var(--blue)}
+.tp-purple{background:rgba(139,92,246,.08);border:1px solid rgba(139,92,246,.2);color:var(--purple)}
+.tp-green{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);color:var(--green)}
+.tp-orange{background:rgba(249,115,22,.08);border:1px solid rgba(249,115,22,.2);color:var(--orange)}
+.tp-cyan{background:rgba(6,182,212,.08);border:1px solid rgba(6,182,212,.2);color:var(--cyan)}
+
+.layout{flex:1;display:grid;grid-template-columns:260px 1fr 300px;overflow:hidden;height:calc(100vh - 108px)}
+
+.panel{background:var(--card);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
+.panel-header{padding:12px 16px;border-bottom:1px solid var(--border);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.panel-body{overflow-y:auto;flex:1;padding:12px}
+
+.doc-item{padding:10px 12px;border:1px solid var(--border);border-radius:8px;cursor:pointer;margin-bottom:8px;transition:all .2s;display:flex;align-items:flex-start;gap:10px}
+.doc-item:hover,.doc-item.active{border-color:var(--orange);background:rgba(249,115,22,.05)}
+.doc-icon{font-size:18px;flex-shrink:0;margin-top:1px}
+.doc-info{flex:1;min-width:0}
+.doc-name{font-size:12px;font-weight:600;color:var(--text);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.doc-meta{font-size:10px;color:var(--muted)}
+.doc-status{font-size:10px;padding:2px 6px;border-radius:4px;margin-top:4px;display:inline-block}
+.status-indexed{background:rgba(16,185,129,.1);color:var(--green);border:1px solid rgba(16,185,129,.25)}
+.status-processing{background:rgba(249,115,22,.1);color:var(--orange);border:1px solid rgba(249,115,22,.25)}
+
+.pipeline-btn{width:100%;padding:10px;background:rgba(249,115,22,.12);border:1px solid rgba(249,115,22,.3);border-radius:8px;color:var(--orange);font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;margin-bottom:8px;font-family:'Inter',sans-serif}
+.pipeline-btn:hover{background:rgba(249,115,22,.2)}
+.pipeline-btn:disabled{opacity:.4;cursor:not-allowed}
+
+.main-area{display:flex;flex-direction:column;overflow:hidden}
+
+.tabs{display:flex;border-bottom:1px solid var(--border);background:var(--card);padding:0 20px;gap:0}
+.tab{padding:12px 16px;font-size:12px;font-weight:500;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap}
+.tab.active{color:var(--orange);border-bottom-color:var(--orange)}
+.tab:hover{color:var(--text)}
+
+.tab-content{flex:1;overflow:hidden;display:none}
+.tab-content.active{display:flex;flex-direction:column}
+
+.pipeline-view{flex:1;overflow-y:auto;padding:20px}
+.pipeline-stages{display:flex;gap:0;margin-bottom:24px;overflow-x:auto}
+.p-stage{flex:1;min-width:100px;text-align:center;padding:12px 8px;position:relative}
+.p-stage:not(:last-child)::after{content:'→';position:absolute;right:-8px;top:50%;transform:translateY(-50%);color:var(--border2);font-size:14px}
+.p-stage-icon{font-size:20px;margin-bottom:6px}
+.p-stage-name{font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.p-stage.done .p-stage-name{color:var(--green)}
+.p-stage.running .p-stage-name{color:var(--orange)}
+.p-stage.done .p-stage-icon,.p-stage.running .p-stage-icon{filter:none}
+.p-stage.pending{opacity:.3}
+
+.extraction-card{background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:12px}
+.extraction-label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.field-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.field-item{background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:8px 10px}
+.field-key{font-size:10px;color:var(--muted);margin-bottom:3px;font-family:'Fira Code',monospace}
+.field-val{font-size:12px;font-weight:500;color:var(--text)}
+
+.qa-area{display:flex;flex-direction:column;overflow:hidden}
+.qa-messages{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:14px}
+.qa-input-row{padding:12px 20px;border-top:1px solid var(--border);background:var(--card);display:flex;gap:10px;align-items:flex-end}
+.qa-input{flex:1;background:var(--bg);border:1px solid var(--border2);border-radius:10px;padding:10px 14px;color:var(--text);font-size:13px;font-family:'Inter',sans-serif;resize:none;line-height:1.5;transition:border-color .2s}
+.qa-input:focus{outline:none;border-color:var(--orange)}
+.qa-btn{padding:10px 16px;background:var(--orange);border:none;border-radius:8px;color:#fff;font-size:13px;font-weight:600;cursor:pointer;transition:opacity .2s}
+.qa-btn:hover{opacity:.85}.qa-btn:disabled{opacity:.4;cursor:not-allowed}
+.msg{display:flex;flex-direction:column;gap:4px}
+.msg.user{align-items:flex-end}.msg.assistant{align-items:flex-start}
+.msg-bubble{max-width:88%;padding:12px 16px;border-radius:12px;font-size:13px;line-height:1.65}
+.msg.user .msg-bubble{background:var(--orange);color:#fff;border-radius:12px 12px 2px 12px}
+.msg.assistant .msg-bubble{background:var(--card2);border:1px solid var(--border);border-radius:12px 12px 12px 2px}
+.msg-time{font-size:10px;color:var(--muted)}
+.typing-indicator{display:flex;gap:4px;align-items:center;padding:12px 16px;background:var(--card2);border:1px solid var(--border);border-radius:12px;width:fit-content}
+.typing-dot{width:6px;height:6px;border-radius:50%;background:var(--muted);animation:typingDot 1.2s infinite}
+.typing-dot:nth-child(2){animation-delay:.2s}.typing-dot:nth-child(3){animation-delay:.4s}
+@keyframes typingDot{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
+.source-chip{font-size:10px;padding:3px 8px;background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.25);border-radius:4px;color:var(--orange);font-family:'Fira Code',monospace;display:inline-block;margin:2px}
+
+.right-panel{background:var(--card);border-left:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
+.agent-step{padding:10px 12px;border:1px solid var(--border);border-radius:8px;margin-bottom:8px;font-size:11px;transition:all .3s}
+.agent-step.done{border-color:rgba(16,185,129,.35);background:rgba(16,185,129,.04)}
+.agent-step.running{border-color:rgba(249,115,22,.5);background:rgba(249,115,22,.06);animation:aPulse 1s infinite}
+.agent-step.pending{opacity:.3}
+@keyframes aPulse{0%,100%{border-color:rgba(249,115,22,.5)}50%{border-color:rgba(249,115,22,1)}}
+.agent-name{font-weight:600;margin-bottom:3px;display:flex;align-items:center;justify-content:space-between}
+.agent-detail{color:var(--muted);font-size:10px;font-family:'Fira Code',monospace;line-height:1.4}
+.agent-time{color:var(--green);font-family:'Fira Code',monospace;font-size:10px}
+.spin{display:inline-block;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.check{color:var(--green)}
+
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px}
+.stat-card{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;text-align:center}
+.stat-val{font-size:18px;font-weight:700;font-family:'Fira Code',monospace;color:var(--orange);margin-bottom:2px}
+.stat-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+
+.progress-bar-wrap{height:4px;background:rgba(255,255,255,.08);border-radius:2px;margin:4px 0}
+.progress-bar{height:100%;border-radius:2px;background:var(--orange);transition:width .6s ease}
+</style>
 </head>
 <body>
-<nav class="navbar">
-  <div class="nav-left">
-    <a class="back-btn" href="https://ankitthakur104.github.io">&larr; Portfolio</a>
-    <span class="page-title">RAG Document Intelligence Engine</span>
-    <span class="badge badge-cyan">Live Demo</span>
+<div class="topbar">
+  <div class="logo">
+    <div class="logo-icon">📄</div>
+    Document Intelligence &amp; AI Extraction Platform
   </div>
-  <a class="github-link" href="https://github.com/ankitthakur104/rag-document-intelligence-engine" target="_blank">&#9733; View Code</a>
-</nav>
-
-<section class="hero">
-  <h1>RAG Document Q&amp;A Engine</h1>
-  <p class="hero-sub">Ingest enterprise documents → semantic chunk + embed → Pinecone vector store → hybrid retrieval → grounded GPT-4o answers with source attribution.</p>
-  <div class="metrics-row">
-    <div class="metric-card"><div class="metric-value">91%</div><div class="metric-label">Retrieval Precision</div></div>
-    <div class="metric-card"><div class="metric-value">−35%</div><div class="metric-label">Hallucinations</div></div>
-    <div class="metric-card"><div class="metric-value">&lt;2s</div><div class="metric-label">Avg Response</div></div>
-    <div class="metric-card"><div class="metric-value">4+</div><div class="metric-label">Doc Formats</div></div>
-  </div>
-</section>
-
-<div class="page-content">
-  <div class="demo-card">
-    <div class="card-header">
-      <div class="traffic-dot" style="background:#ff5555"></div>
-      <div class="traffic-dot" style="background:#ffb86c"></div>
-      <div class="traffic-dot" style="background:#50fa7b"></div>
-      <span class="card-label">LangChain · OpenAI · Pinecone · hybrid retrieval · GPT-4o</span>
-    </div>
-    <div class="card-body">
-      <div class="section-label">Select Document</div>
-      <div class="doc-grid" id="doc-grid"></div>
-
-      <div class="section-label">Ask a Question</div>
-      <textarea id="question-input" rows="2" placeholder="e.g. What is the company's refund policy for digital products?"></textarea>
-      <div class="example-chips" id="example-chips"></div>
-      <button class="run-btn" id="run-btn" onclick="askQuestion()">&#9654; Ask Document</button>
-      <div class="loading-row" id="loading-indicator">
-        <div class="spinner"></div>
-        <span id="loading-text">Embedding query → ANN search → Reranking → Generating answer...</span>
-      </div>
-
-      <div class="result-section" id="result-section">
-        <div class="answer-card">
-          <div class="answer-label">
-            <span>&#9679;</span> GPT-4o Answer (grounded in retrieved chunks)
-          </div>
-          <div class="answer-text" id="answer-text"></div>
-        </div>
-
-        <div class="section-label">Retrieved Context Chunks (top 3 by cosine similarity)</div>
-        <div class="retrieved-chunks" id="retrieved-chunks"></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="two-col">
-    <div class="info-box">
-      <strong>Retrieval Pipeline</strong><br><br>
-      Semantic chunking: 512 tokens, 64-token overlap<br>
-      Embedding: text-embedding-3-large (1536-dim)<br>
-      Vector store: Pinecone (HNSW, cosine similarity)<br>
-      Hybrid: dense + BM25 sparse retrieval, RRF fusion<br>
-      Reranker: cross-encoder for top-20 → top-3 chunks
-    </div>
-    <div class="info-box">
-      <strong>Grounding Guarantee</strong><br><br>
-      GPT-4o prompted to answer ONLY from retrieved chunks.<br>
-      If confidence &lt;0.70, responds "I don't know based on this document."<br>
-      Every claim traceable to a specific chunk + page number.<br>
-      Hallucination rate: 4% vs 39% for vanilla GPT-4o (internal eval).
-    </div>
+  <div class="topbar-links">
+    <span>Ankit Kumar</span>
+    <a href="https://ankitthakur104.github.io" target="_blank">Portfolio</a>
+    <a href="mailto:ankitthakur104@gmail.com">ankitthakur104@gmail.com</a>
+    <div class="badge-live"><div class="pulse"></div>Live Demo</div>
   </div>
 </div>
 
-<footer>Built by <a href="https://ankitthakur104.github.io">Ankit Kumar</a> — <a href="mailto:ankitthakur104@gmail.com">ankitthakur104@gmail.com</a></footer>
+<div class="tech-bar">
+  <span class="tech-pill tp-blue">Python</span>
+  <span class="tech-pill tp-purple">LangGraph</span>
+  <span class="tech-pill tp-green">FastAPI</span>
+  <span class="tech-pill tp-orange">OCR</span>
+  <span class="tech-pill tp-blue">FAISS</span>
+  <span class="tech-pill tp-blue">OpenAI</span>
+  <span class="tech-pill tp-orange">Document Classification</span>
+  <span class="tech-pill tp-cyan">Async Ingestion</span>
+  <span class="tech-pill tp-purple">Retrieval Validation</span>
+</div>
+
+<div class="layout">
+  <!-- Document Library -->
+  <div class="panel">
+    <div class="panel-header">📁 Document Library</div>
+    <div class="panel-body">
+      <button class="pipeline-btn" id="ingest-btn" onclick="simulateIngest()">⚡ Run Ingestion Pipeline</button>
+      <div id="doc-list"></div>
+    </div>
+  </div>
+
+  <!-- Main Area -->
+  <div class="main-area">
+    <div class="tabs">
+      <div class="tab active" onclick="switchTab('pipeline')">🔄 Pipeline</div>
+      <div class="tab" onclick="switchTab('extraction')">🗂 Extraction</div>
+      <div class="tab" onclick="switchTab('qa')">💬 Q&amp;A</div>
+    </div>
+
+    <!-- Pipeline Tab -->
+    <div class="tab-content active" id="tab-pipeline">
+      <div class="pipeline-view" id="pipeline-view">
+        <div style="font-size:12px;color:var(--muted);margin-bottom:16px">Select a document and click <strong style="color:var(--orange)">Run Ingestion Pipeline</strong> to see the AI processing stages execute in real time.</div>
+        <div class="pipeline-stages" id="pipeline-stages"></div>
+        <div id="pipeline-log" style="font-family:'Fira Code',monospace;font-size:11px;color:var(--muted);line-height:1.8;background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:16px;min-height:120px"></div>
+      </div>
+    </div>
+
+    <!-- Extraction Tab -->
+    <div class="tab-content" id="tab-extraction">
+      <div style="overflow-y:auto;flex:1;padding:20px" id="extraction-view">
+        <div style="font-size:12px;color:var(--muted)">Run the ingestion pipeline first, then view extracted metadata and structured fields here.</div>
+      </div>
+    </div>
+
+    <!-- Q&A Tab -->
+    <div class="tab-content" id="tab-qa">
+      <div class="qa-area" style="flex:1;overflow:hidden;display:flex;flex-direction:column">
+        <div class="qa-messages" id="qa-messages">
+          <div class="msg assistant">
+            <div class="msg-bubble">📄 Document Q&amp;A is ready. Ingest a document first, then ask questions — I use retrieval validation and source-grounded generation to provide accurate answers with citations.<br><br>Try: <em>"What are the key terms?"</em>, <em>"Summarize the financial projections"</em>, or <em>"What are the compliance obligations?"</em></div>
+            <div class="msg-time">Ready</div>
+          </div>
+        </div>
+        <div class="qa-input-row">
+          <textarea class="qa-input" id="qa-input" placeholder="Ask a question about your documents..." rows="1" onkeydown="qaKey(event)"></textarea>
+          <button class="qa-btn" id="qa-btn" onclick="askQuestion()">Ask →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Agent Routing + Stats -->
+  <div class="right-panel">
+    <div class="panel-header">🤖 Agent Routing Trace</div>
+    <div class="panel-body" id="agent-trace">
+      <div style="font-size:11px;color:var(--muted);text-align:center;padding:20px 10px;line-height:1.6">Run the pipeline to see agent routing decisions</div>
+    </div>
+    <div class="stat-grid" id="stat-grid"></div>
+  </div>
+</div>
 
 <script>
-var documents = [
-  {icon:'📄', title:'Product Manual', meta:'PDF · 48 pages · 312 chunks', id:'manual'},
-  {icon:'📋', title:'Company Policy', meta:'DOCX · 22 pages · 156 chunks', id:'policy'},
-  {icon:'📊', title:'Annual Report', meta:'PDF · 94 pages · 628 chunks', id:'report'},
-  {icon:'🔧', title:'API Documentation', meta:'HTML · 67 pages · 445 chunks', id:'api'},
-  {icon:'⚖️', title:'Legal Contract', meta:'PDF · 31 pages · 214 chunks', id:'legal'},
-  {icon:'🎓', title:'Training Guide', meta:'DOCX · 55 pages · 378 chunks', id:'training'}
+var DOCS = [
+  {icon:"📋",name:"MSA_Acme_Corp_2024.pdf",type:"Contract",pages:18,size:"2.1 MB",status:"indexed",words:9400},
+  {icon:"📊",name:"Q3_Financial_Report.pdf",type:"Financial Report",pages:32,size:"4.7 MB",status:"indexed",words:18200},
+  {icon:"📝",name:"Employee_Handbook_v4.pdf",type:"Policy Document",pages:86,size:"12.3 MB",status:"indexed",words:41600},
+  {icon:"🔬",name:"Research_Summary_AI.pdf",type:"Research Paper",pages:12,size:"1.8 MB",status:"indexed",words:6200},
+  {icon:"📃",name:"NDA_Template_2025.docx",type:"Legal Agreement",pages:6,size:"0.4 MB",status:"indexed",words:2800},
+  {icon:"🏗",name:"Product_Roadmap_H1.pdf",type:"Planning Doc",pages:24,size:"3.1 MB",status:"processing",words:0}
 ];
 
-var selectedDoc = 'manual';
+var PIPELINE_STAGES = [
+  {icon:"📥",name:"Ingest"},
+  {icon:"👁",name:"OCR"},
+  {icon:"🏷",name:"Classify"},
+  {icon:"✂",name:"Chunk"},
+  {icon:"🔎",name:"Extract"},
+  {icon:"📦",name:"Index"}
+];
 
-var qaBank = {
-  manual: {
-    'refund|return|money back': {
-      answer: 'According to the Product Manual (Section 8.3 — Returns & Refunds): Physical products may be returned within 30 days of purchase for a full refund, provided they are in original condition with all packaging. Digital products are eligible for a refund within 7 days if fewer than 25% of the content has been accessed. To initiate a return, contact support@company.com with your order number. Refunds are processed within 5–7 business days to the original payment method.',
-      chunks: [
-        {src:'manual.pdf · p.31 · chunk #187', sim:.94, text:'Products may be returned within 30 days of purchase. <span class="highlight">Digital products are refundable within 7 days</span> if less than 25% of the content has been accessed. All returns must include original packaging and proof of purchase.'},
-        {src:'manual.pdf · p.32 · chunk #188', sim:.88, text:'Refund requests are processed within <span class="highlight">5–7 business days</span> to the original payment method. Contact support@company.com with your order number to initiate a return request.'},
-        {src:'manual.pdf · p.33 · chunk #191', sim:.79, text:'Items showing signs of damage not caused by manufacturing defects are not eligible for return. <span class="highlight">Warranty claims are handled separately</span> under Section 9.'}
-      ]
-    },
-    'install|setup|getting started': {
-      answer: 'From the Product Manual (Chapter 2 — Installation & Setup): System requirements are Windows 10/11 or macOS 12+, 8GB RAM minimum (16GB recommended), and 4GB free disk space. Installation steps: (1) Download the installer from the portal, (2) Run as administrator and accept the license agreement, (3) Choose installation directory (default: C:\\Program Files\\Product), (4) Enter your license key from the welcome email, (5) Restart your system. First-launch configuration takes 2–3 minutes.',
-      chunks: [
-        {src:'manual.pdf · p.8 · chunk #044', sim:.96, text:'<span class="highlight">System requirements:</span> Windows 10/11 or macOS 12 Monterey+. Minimum 8GB RAM, 16GB recommended. 4GB free disk space required. Admin privileges needed for installation.'},
-        {src:'manual.pdf · p.9 · chunk #047', sim:.91, text:'To install: run the downloaded installer as administrator. Accept the End User License Agreement. <span class="highlight">Enter your license key</span> from the welcome email. Choose installation directory (default: C:\\Program Files\\Product).'},
-        {src:'manual.pdf · p.11 · chunk #051', sim:.82, text:'After installation, a <span class="highlight">first-launch configuration wizard</span> will run automatically (2–3 minutes). Do not interrupt this process. Restart your system once complete.'}
-      ]
-    },
-    default: {
-      answer: 'Based on the Product Manual: I found relevant information in the document for your query. The manual covers product installation, configuration, troubleshooting, warranty information, and return policies across its 48 pages. For the most precise answer, I searched the 312 indexed chunks and retrieved the 3 most semantically relevant passages below.',
-      chunks: [
-        {src:'manual.pdf · p.1 · chunk #001', sim:.72, text:'This Product Manual covers installation, configuration, daily operation, troubleshooting, and warranty information. <span class="highlight">Read all safety instructions</span> before operating the product.'},
-        {src:'manual.pdf · p.4 · chunk #018', sim:.68, text:'For technical support, contact support@company.com or call 1-800-XXX-XXXX (Mon–Fri 9am–6pm IST). <span class="highlight">Have your product serial number ready</span> when contacting support.'},
-        {src:'manual.pdf · p.48 · chunk #312', sim:.61, text:'This document is subject to change without notice. The most current version is available at company.com/docs. <span class="highlight">Version 3.2, last updated January 2025.</span>'}
-      ]
-    }
-  },
-  policy: {
-    'leave|vacation|holiday|time off': {
-      answer: 'From the Company Policy document (HR Policy 4.2 — Leave Entitlement): All permanent employees are entitled to 24 days of paid annual leave per year (pro-rated for joiners mid-year). In addition, 12 paid public holidays are observed. Sick leave is 12 days per year. Unused leave up to 10 days may be carried forward to the following year. Leave must be applied at least 3 days in advance via the HR portal, except for emergency sick leave.',
-      chunks: [
-        {src:'policy.docx · p.14 · chunk #089', sim:.95, text:'<span class="highlight">Annual leave entitlement: 24 days per calendar year</span> for all permanent employees. Pro-rated for employees joining after January 1st based on remaining months in the year.'},
-        {src:'policy.docx · p.15 · chunk #092', sim:.89, text:'Sick leave: 12 days per year. <span class="highlight">Unused annual leave up to 10 days may be carried forward</span> to the following year. Any balance above 10 days is forfeited on December 31st.'},
-        {src:'policy.docx · p.16 · chunk #096', sim:.81, text:'Leave applications must be submitted via the HR portal with <span class="highlight">minimum 3 days advance notice</span>. Emergency leaves and sick leaves are exempt from this requirement.'}
-      ]
-    },
-    default: {
-      answer: 'Based on the Company Policy document (22 pages, 156 chunks): The policy covers leave entitlement, code of conduct, remote work guidelines, expenses and reimbursement, performance review process, and disciplinary procedures. The 3 most relevant chunks for your query are shown below.',
-      chunks: [
-        {src:'policy.docx · p.1 · chunk #001', sim:.69, text:'This policy document applies to all full-time and part-time employees. <span class="highlight">Effective date: March 1, 2024.</span> Supersedes all previous policy versions.'},
-        {src:'policy.docx · p.3 · chunk #012', sim:.64, text:'All employees are expected to uphold the company values of integrity, innovation, and inclusion. <span class="highlight">Violations may result in disciplinary action</span> up to and including termination.'},
-        {src:'policy.docx · p.22 · chunk #156', sim:.58, text:'Queries about this policy should be directed to hr@company.com. <span class="highlight">This document is reviewed annually</span> and updated as necessary to reflect changes in law or company practice.'}
-      ]
-    }
-  },
-  report: {
-    'revenue|profit|financial|earnings|growth': {
-      answer: 'From the Annual Report (Financial Highlights, p.12): Total revenue for FY2024 was ₹847 crore, a 34% YoY increase from ₹632 crore in FY2023. Net profit grew 41% to ₹124 crore (vs. ₹88 crore prior year). EBITDA margin improved from 18.2% to 21.6%. Key growth drivers: SaaS subscriptions (+67%), enterprise contracts (+38%), and international expansion (+52%). The company added 1,240 new enterprise customers in FY2024.',
-      chunks: [
-        {src:'report.pdf · p.12 · chunk #078', sim:.97, text:'FY2024 Revenue: <span class="highlight">₹847 crore (+34% YoY)</span>. Net Profit: ₹124 crore (+41% YoY). EBITDA: ₹183 crore, margin 21.6% vs 18.2% prior year.'},
-        {src:'report.pdf · p.14 · chunk #089', sim:.91, text:'Growth drivers: <span class="highlight">SaaS subscriptions grew 67%</span> driven by enterprise expansion. International revenue contribution increased from 18% to 26% of total revenue.'},
-        {src:'report.pdf · p.16 · chunk #097', sim:.85, text:'Enterprise customer base: <span class="highlight">3,847 active enterprise accounts</span> (+47% YoY). Average contract value increased 15% to ₹22 lakh. Net Revenue Retention: 118%.'}
-      ]
-    },
-    default: {
-      answer: 'Based on the Annual Report (94 pages, 628 chunks): The report covers financial performance, business segment analysis, risk factors, board governance, ESG initiatives, and future outlook. Revenue, profit, and operational metrics are in the Financial Highlights section (pp.10–25).',
-      chunks: [
-        {src:'report.pdf · p.3 · chunk #014', sim:.67, text:'This Annual Report for FY2024 presents the consolidated financial statements and business performance of the company. <span class="highlight">Audited by Deloitte India LLP.</span>'},
-        {src:'report.pdf · p.8 · chunk #049', sim:.63, text:'The company operates in 3 business segments: Enterprise SaaS (62% of revenue), Professional Services (24%), and Marketplace (14%). <span class="highlight">All segments grew year-over-year.</span>'},
-        {src:'report.pdf · p.90 · chunk #611', sim:.58, text:'Forward-looking statements in this report involve risks and uncertainties. <span class="highlight">Actual results may differ materially</span> from projections. See Risk Factors section (pp.55–68).'}
-      ]
-    }
-  },
-  api: {
-    'authentication|auth|api key|token|oauth': {
-      answer: 'From the API Documentation (Authentication Guide, Section 3): The API supports two authentication methods: (1) API Key — pass in the X-API-Key header for server-to-server calls; (2) OAuth 2.0 — use the /oauth/token endpoint with client_credentials grant for user-scoped access. API keys can be generated from the dashboard under Settings → API Keys. Keys have a default rate limit of 1,000 req/min and expire after 1 year. Rotate keys before expiry to avoid service disruption.',
-      chunks: [
-        {src:'api.html · p.11 · chunk #067', sim:.96, text:'Authentication: All API requests must include either an <span class="highlight">X-API-Key header</span> or a Bearer token from the OAuth 2.0 flow. Unauthenticated requests return HTTP 401.'},
-        {src:'api.html · p.12 · chunk #071', sim:.90, text:'Generate API keys from Dashboard → Settings → API Keys. <span class="highlight">Keys expire after 365 days.</span> Enable auto-rotation in dashboard settings to avoid expiry-related outages.'},
-        {src:'api.html · p.13 · chunk #074', sim:.83, text:'Rate limits: Free tier: 100 req/min. Starter: 500 req/min. <span class="highlight">Enterprise: 10,000 req/min.</span> Rate limit headers (X-RateLimit-Remaining) included in every response.'}
-      ]
-    },
-    default: {
-      answer: 'Based on the API Documentation (67 pages, 445 chunks): The docs cover authentication, rate limiting, all REST endpoints, webhook configuration, SDKs (Python, Node, Go), error codes, and changelog. Common topics: authentication (Section 3), endpoints reference (Section 5–12), and webhooks (Section 14).',
-      chunks: [
-        {src:'api.html · p.1 · chunk #001', sim:.70, text:'Base URL: <span class="highlight">https://api.company.com/v2/</span>. All responses are JSON. HTTPS required. TLS 1.2+ supported.'},
-        {src:'api.html · p.4 · chunk #021', sim:.65, text:'SDK support: <span class="highlight">Python, Node.js, Go, Java, and Ruby</span> official SDKs available on GitHub. Install via pip, npm, or go get.'},
-        {src:'api.html · p.67 · chunk #445', sim:.59, text:'API Changelog: v2.4 (Jan 2025) — Added batch endpoints. v2.3 (Oct 2024) — <span class="highlight">Deprecated v1 auth flow.</span> Full changelog at api.company.com/changelog.'}
-      ]
-    }
-  }
+var EXTRACTIONS = {
+  "MSA_Acme_Corp_2024.pdf":{type:"Contract",fields:[
+    {key:"parties",val:"Acme Corp / TechVision Ltd"},
+    {key:"effective_date",val:"2024-01-15"},
+    {key:"value",val:"$240,000 / year"},
+    {key:"term",val:"24 months + renewal"},
+    {key:"governing_law",val:"California, USA"},
+    {key:"termination_notice",val:"60 days written"},
+    {key:"liability_cap",val:"$500,000"},
+    {key:"auto_renewal",val:"Yes (opt-out 90 days)"}
+  ],summary:"Master Service Agreement between Acme Corp and TechVision Ltd for SaaS platform services at $240K/year, 24-month initial term with auto-renewal, California law governing, $500K liability cap."},
+  "Q3_Financial_Report.pdf":{type:"Financial Report",fields:[
+    {key:"period",val:"Q3 2024 (Jul–Sep)"},
+    {key:"revenue",val:"$10.2M (+18% YoY)"},
+    {key:"gross_margin",val:"72.4%"},
+    {key:"operating_loss",val:"-$1.8M"},
+    {key:"arr",val:"$38.7M"},
+    {key:"new_customers",val:"47"},
+    {key:"churn_rate",val:"2.1% (monthly)"},
+    {key:"cash_runway",val:"22 months"}
+  ],summary:"Q3 2024 financial report showing $10.2M revenue (+18% YoY), 72.4% gross margin, ARR of $38.7M, 47 new customers, monthly churn of 2.1%, and 22-month cash runway."},
+  "Employee_Handbook_v4.pdf":{type:"Policy Document",fields:[
+    {key:"version",val:"v4.0 (Sep 2024)"},
+    {key:"pto_days",val:"20 days + 10 public holidays"},
+    {key:"probation_period",val:"90 days"},
+    {key:"remote_allowance",val:"$1,500 setup + $80/mo"},
+    {key:"health_benefits",val:"Medical, dental, vision"},
+    {key:"equity_cliff",val:"1 year cliff, 4-year vest"},
+    {key:"performance_cycle",val:"Semi-annual reviews"},
+    {key:"learning_budget",val:"$2,000/year"}
+  ],summary:"Employee Handbook v4.0 covering PTO policy, remote work allowances, benefits package including $2K annual learning budget, and semi-annual performance review cycle."},
+  "Research_Summary_AI.pdf":{type:"Research Paper",fields:[
+    {key:"title",val:"RAG Benchmarking 2024"},
+    {key:"authors",val:"5 authors (DeepMind/Stanford)"},
+    {key:"method",val:"Hybrid Dense + Sparse"},
+    {key:"dataset",val:"BEIR + MS-MARCO"},
+    {key:"recall@10",val:"94.2%"},
+    {key:"precision@5",val:"87.6%"},
+    {key:"baseline_delta",val:"+12.4% over BM25"},
+    {key:"model",val:"E5-Large + GPT-4o"}
+  ],summary:"Research paper benchmarking hybrid RAG systems achieving 94.2% recall@10, 12.4% improvement over BM25 baseline, evaluated on BEIR and MS-MARCO datasets."},
+  "NDA_Template_2025.docx":{type:"Legal Agreement",fields:[
+    {key:"nda_type",val:"Mutual NDA"},
+    {key:"confidentiality_period",val:"3 years"},
+    {key:"exclusions",val:"Public domain / Prior knowledge"},
+    {key:"return_of_info",val:"30 days on termination"},
+    {key:"jurisdiction",val:"Delaware, USA"},
+    {key:"penalty_clause",val:"Injunctive relief available"},
+    {key:"permitted_disclosure",val:"Legal requirement / court order"},
+    {key:"effective_upon",val:"Signature of both parties"}
+  ],summary:"Mutual NDA template with 3-year confidentiality period, 30-day return-of-information clause, Delaware jurisdiction, injunctive relief available for breach."}
 };
 
-var docExamples = {
-  manual: ['How do I install the product?', 'What is the refund policy?', 'What are the system requirements?'],
-  policy: ['How many leave days do I get?', 'What is the remote work policy?', 'How does the performance review work?'],
-  report: ['What was the revenue in FY2024?', 'How many enterprise customers?', 'What is the profit margin?'],
-  api: ['How do I authenticate API requests?', 'What are the rate limits?', 'How do I set up webhooks?'],
-  legal: ['What is the liability cap?', 'What are the termination clauses?', 'Which law governs this contract?'],
-  training: ['What topics does the course cover?', 'How long is the certification valid?', 'What is the assessment format?']
-};
+var QA_PAIRS = [
+  {q:"What are the key terms of the contract?",a:"Based on the <strong>MSA_Acme_Corp_2024.pdf</strong>:<br><br>• <strong>Parties:</strong> Acme Corp and TechVision Ltd<br>• <strong>Value:</strong> $240,000/year for SaaS platform services<br>• <strong>Term:</strong> 24 months with automatic renewal (opt-out 90 days prior)<br>• <strong>Liability Cap:</strong> $500,000<br>• <strong>Termination:</strong> 60 days written notice<br>• <strong>Governing Law:</strong> California, USA",sources:["MSA_Acme_Corp_2024.pdf · pg 1, 8, 14"]},
+  {q:"What is the Q3 revenue and ARR?",a:"From <strong>Q3_Financial_Report.pdf</strong>:<br><br>• <strong>Q3 Revenue:</strong> $10.2M (+18% YoY)<br>• <strong>ARR:</strong> $38.7M<br>• <strong>Gross Margin:</strong> 72.4%<br>• <strong>New Customers:</strong> 47 in Q3<br>• <strong>Monthly Churn:</strong> 2.1%<br>• <strong>Cash Runway:</strong> 22 months at current burn rate",sources:["Q3_Financial_Report.pdf · pg 3, 7, 12"]},
+  {q:"What is the remote work policy?",a:"From <strong>Employee_Handbook_v4.pdf (Section 4.2)</strong>:<br><br>• <strong>Eligibility:</strong> All employees after 90-day probation period<br>• <strong>Setup Allowance:</strong> $1,500 one-time for home office equipment<br>• <strong>Internet:</strong> $80/month reimbursement with receipt<br>• <strong>Full Remote:</strong> Engineering roles with manager approval<br>• <strong>PTO:</strong> 20 days + 10 public holidays annually",sources:["Employee_Handbook_v4.pdf · pg 22, 23"]},
+  {q:"What does the NDA cover?",a:"From <strong>NDA_Template_2025.docx</strong>:<br><br>• <strong>Type:</strong> Mutual NDA (both parties share obligations)<br>• <strong>Duration:</strong> 3 years from signing<br>• <strong>Exclusions:</strong> Information already in public domain or known prior<br>• <strong>Breach Remedy:</strong> Injunctive relief available (no need to prove damages)<br>• <strong>Return of Information:</strong> Within 30 days of termination<br>• <strong>Jurisdiction:</strong> Delaware, USA",sources:["NDA_Template_2025.docx · pg 1, 3, 5"]},
+  {q:"What is the research recall performance?",a:"From <strong>Research_Summary_AI.pdf</strong>:<br><br>• <strong>Method:</strong> Hybrid Dense + Sparse retrieval (E5-Large + BM25)<br>• <strong>Recall@10:</strong> <strong>94.2%</strong> on BEIR benchmark<br>• <strong>Precision@5:</strong> 87.6%<br>• <strong>Improvement:</strong> +12.4% over BM25 baseline<br>• <strong>Generation:</strong> GPT-4o for answer synthesis<br>• <strong>Datasets:</strong> BEIR + MS-MARCO evaluation suite",sources:["Research_Summary_AI.pdf · pg 4, 6, 9"]}
+];
 
-(function init(){
-  var grid = document.getElementById('doc-grid');
-  documents.forEach(function(d){
-    var btn = document.createElement('button');
-    btn.className = 'doc-btn' + (d.id==='manual'?' selected':'');
-    btn.innerHTML = '<div class="doc-icon">'+d.icon+'</div><div class="doc-title">'+d.title+'</div><div class="doc-meta">'+d.meta+'</div>';
-    btn.onclick = function(){
-      document.querySelectorAll('.doc-btn').forEach(function(b){b.classList.remove('selected')});
-      btn.classList.add('selected');
-      selectedDoc = d.id;
-      updateChips();
-      document.getElementById('result-section').className = 'result-section';
-    };
-    grid.appendChild(btn);
-  });
-  updateChips();
+var AGENT_STEPS = [
+  {icon:"📥",name:"Ingestion Agent",detail:"Async PDF/DOCX parser + page splitter",time:"0.22s"},
+  {icon:"👁",name:"OCR Agent",detail:"Tesseract + Vision API for scanned pages",time:"0.48s"},
+  {icon:"🏷",name:"Classification Agent",detail:"Doc type routing: contract/financial/policy",time:"0.11s"},
+  {icon:"✂",name:"Chunking Agent",detail:"Semantic chunking (512 tok, 64 overlap)",time:"0.09s"},
+  {icon:"🔎",name:"Extraction Agent",detail:"Structured field extraction via GPT-4o",time:"0.61s"},
+  {icon:"✅",name:"Validation Agent",detail:"Retrieval grounding check — hallucination filter",time:"0.14s"},
+  {icon:"📦",name:"Indexing Agent",detail:"FAISS embed + metadata store write",time:"0.18s"}
+];
 
-  document.getElementById('question-input').addEventListener('keydown', function(e){
-    if(e.key==='Enter'&&(e.ctrlKey||e.metaKey)) askQuestion();
-  });
-})();
+var selectedDoc = 0;
+var isRunning = false;
+var ingested = false;
 
-function updateChips(){
-  var chips = document.getElementById('example-chips');
-  chips.innerHTML = '';
-  var qs = docExamples[selectedDoc] || docExamples.manual;
-  qs.forEach(function(q){
-    var c = document.createElement('span'); c.className='chip';
-    c.textContent = q;
-    c.onclick = function(){ document.getElementById('question-input').value=q; };
-    chips.appendChild(c);
-  });
+function init() {
+  renderDocs();
+  renderPipelineStages(null);
+  renderStats(false);
 }
 
-function sleep(ms){ return new Promise(function(r){ setTimeout(r,ms); }); }
-
-function findAnswer(doc, question){
-  var bank = qaBank[doc] || qaBank.manual;
-  var q = question.toLowerCase();
-  for(var pattern in bank){
-    if(pattern!=='default' && new RegExp(pattern).test(q)) return bank[pattern];
-  }
-  return bank.default || qaBank.manual.default;
-}
-
-async function askQuestion(){
-  var question = document.getElementById('question-input').value.trim();
-  if(!question){ document.getElementById('question-input').focus(); return; }
-
-  var btn = document.getElementById('run-btn');
-  btn.disabled = true;
-  document.getElementById('result-section').className = 'result-section';
-  document.getElementById('loading-indicator').className = 'loading-row active';
-
-  var loadingSteps = ['Embedding query (text-embedding-3-large)...','Searching Pinecone ANN index...','Reranking top-20 candidates...','Generating grounded answer with GPT-4o...'];
-  for(var i=0;i<loadingSteps.length;i++){
-    document.getElementById('loading-text').textContent = loadingSteps[i];
-    await sleep(280 + Math.random()*180);
-  }
-
-  var result = findAnswer(selectedDoc, question);
-
-  document.getElementById('answer-text').textContent = result.answer;
-
-  var chunksEl = document.getElementById('retrieved-chunks');
-  chunksEl.innerHTML = result.chunks.map(function(c, i){
-    var simPct = Math.round(c.sim*100);
-    return '<div class="chunk-card">' +
-      '<div class="chunk-header">' +
-        '<span class="chunk-source">' + c.src + '</span>' +
-        '<span class="chunk-sim">' +
-          '<div class="sim-mini-bar"><div class="sim-mini-fill" style="width:0%" data-w="' + simPct + '"></div></div>' +
-          'cosine: ' + c.sim.toFixed(3) +
-        '</span>' +
-      '</div>' +
-      '<div class="chunk-text">' + c.text + '</div>' +
-    '</div>';
+function renderDocs() {
+  var list = document.getElementById('doc-list');
+  list.innerHTML = DOCS.map(function(d, i) {
+    return '<div class="doc-item' + (i === selectedDoc ? ' active' : '') + '" onclick="selectDoc(' + i + ')">' +
+      '<div class="doc-icon">' + d.icon + '</div>' +
+      '<div class="doc-info"><div class="doc-name">' + d.name + '</div>' +
+      '<div class="doc-meta">' + d.type + ' · ' + d.pages + ' pages · ' + d.size + '</div>' +
+      '<span class="doc-status ' + (d.status === 'indexed' ? 'status-indexed' : 'status-processing') + '">' + (d.status === 'indexed' ? '✓ Indexed' : '⟳ Processing') + '</span>' +
+      '</div></div>';
   }).join('');
-
-  document.getElementById('result-section').className = 'result-section visible';
-  document.getElementById('loading-indicator').className = 'loading-row';
-  btn.disabled = false;
-
-  requestAnimationFrame(function(){
-    document.querySelectorAll('.sim-mini-fill').forEach(function(el){
-      el.style.width = el.getAttribute('data-w') + '%';
-    });
-  });
 }
+
+function selectDoc(idx) {
+  selectedDoc = idx;
+  renderDocs();
+  ingested = false;
+  renderPipelineStages(null);
+  document.getElementById('extraction-view').innerHTML = '<div style="font-size:12px;color:var(--muted)">Run the ingestion pipeline to see extracted data for this document.</div>';
+  document.getElementById('agent-trace').innerHTML = '<div style="font-size:11px;color:var(--muted);text-align:center;padding:20px 10px;line-height:1.6">Run the pipeline to see agent routing decisions</div>';
+}
+
+function switchTab(tab) {
+  document.querySelectorAll('.tab').forEach(function(el, i) { el.classList.toggle('active', ['pipeline','extraction','qa'][i] === tab); });
+  document.querySelectorAll('.tab-content').forEach(function(el) { el.classList.remove('active'); });
+  document.getElementById('tab-' + tab).classList.add('active');
+}
+
+function renderPipelineStages(activeIdx) {
+  var el = document.getElementById('pipeline-stages');
+  el.innerHTML = PIPELINE_STAGES.map(function(s, i) {
+    var cls = 'p-stage';
+    if (activeIdx === null) cls += ' pending';
+    else if (i < activeIdx) cls += ' done';
+    else if (i === activeIdx) cls += ' running';
+    else cls += ' pending';
+    return '<div class="' + cls + '"><div class="p-stage-icon">' + s.icon + '</div><div class="p-stage-name">' + s.name + '</div></div>';
+  }).join('');
+}
+
+function sleep(ms) { return new Promise(function(r) { setTimeout(r, ms); }); }
+
+async function simulateIngest() {
+  if (isRunning) return;
+  isRunning = true;
+  var btn = document.getElementById('ingest-btn');
+  btn.disabled = true;
+  btn.textContent = '⟳ Processing...';
+  switchTab('pipeline');
+
+  var doc = DOCS[selectedDoc];
+  var log = document.getElementById('pipeline-log');
+  log.innerHTML = '';
+  renderPipelineStages(0);
+  renderAgentTrace(null);
+
+  var delays = [280, 520, 160, 140, 680, 200, 240];
+  var logs = [
+    '[Ingestion] Parsing ' + doc.name + ' (' + doc.pages + ' pages, ' + doc.size + ')',
+    '[OCR] Scanning ' + doc.pages + ' pages · Detected ' + Math.floor(doc.pages * 0.15) + ' scanned pages → Vision API',
+    '[Classification] Document type: <strong style="color:var(--orange)">' + doc.type + '</strong> · Confidence: 0.97',
+    '[Chunking] Generated ' + Math.ceil(doc.words / 400) + ' semantic chunks · avg 412 tokens · 64-token overlap',
+    '[Extraction] Extracting structured fields · 8 entities detected · GPT-4o call: 1.2s',
+    '[Validation] Grounding check passed · 0 hallucinations detected · faithfulness: 0.96',
+    '[Indexing] Embedded ' + Math.ceil(doc.words / 400) + ' chunks → FAISS · Wrote metadata → PostgreSQL · Index updated'
+  ];
+
+  var start = Date.now();
+  for (var i = 0; i < PIPELINE_STAGES.length; i++) {
+    renderPipelineStages(i);
+    renderAgentTrace(i);
+    await sleep(delays[i]);
+    var line = document.createElement('div');
+    line.innerHTML = '<span style="color:var(--muted)">[' + ((Date.now() - start) / 1000).toFixed(2) + 's]</span> ' + logs[i];
+    log.appendChild(line);
+    log.scrollTop = log.scrollHeight;
+  }
+  renderPipelineStages(PIPELINE_STAGES.length);
+
+  ingested = true;
+  renderExtractionView(doc);
+  renderStats(true);
+  btn.disabled = false;
+  btn.textContent = '✓ Re-run Pipeline';
+  isRunning = false;
+}
+
+function renderAgentTrace(activeIdx) {
+  var el = document.getElementById('agent-trace');
+  el.innerHTML = AGENT_STEPS.map(function(s, i) {
+    var cls = 'agent-step';
+    if (activeIdx === null) cls += ' pending';
+    else if (i < activeIdx) cls += ' done';
+    else if (i === activeIdx) cls += ' running';
+    else cls += ' pending';
+    var status = '';
+    if (activeIdx !== null && i < activeIdx) status = '<span class="agent-time">✓ ' + s.time + '</span>';
+    else if (activeIdx !== null && i === activeIdx) status = '<span class="spin">⟳</span>';
+    return '<div class="' + cls + '"><div class="agent-name"><span>' + s.icon + ' ' + s.name + '</span>' + status + '</div><div class="agent-detail">' + s.detail + '</div></div>';
+  }).join('');
+}
+
+function renderExtractionView(doc) {
+  var ext = EXTRACTIONS[doc.name];
+  if (!ext) { document.getElementById('extraction-view').innerHTML = '<div style="color:var(--muted);font-size:12px">No extraction data available for this document type.</div>'; return; }
+  var fieldsHTML = ext.fields.map(function(f) {
+    return '<div class="field-item"><div class="field-key">' + f.key + '</div><div class="field-val">' + f.val + '</div></div>';
+  }).join('');
+  document.getElementById('extraction-view').innerHTML =
+    '<div class="extraction-card"><div class="extraction-label">📋 Document Type: <span style="color:var(--orange)">' + ext.type + '</span></div>' +
+    '<div style="font-size:12px;color:var(--dim);margin-bottom:12px;line-height:1.6;padding:10px;background:var(--bg);border:1px solid var(--border);border-radius:6px">' + ext.summary + '</div>' +
+    '</div>' +
+    '<div class="extraction-card"><div class="extraction-label">🗂 Extracted Fields</div><div class="field-grid">' + fieldsHTML + '</div></div>' +
+    '<div class="extraction-card"><div class="extraction-label">📊 Processing Stats</div>' +
+    '<div class="field-grid">' +
+    '<div class="field-item"><div class="field-key">chunks_generated</div><div class="field-val">' + Math.ceil(doc.words / 400) + '</div></div>' +
+    '<div class="field-item"><div class="field-key">pages_processed</div><div class="field-val">' + doc.pages + '</div></div>' +
+    '<div class="field-item"><div class="field-key">fields_extracted</div><div class="field-val">' + ext.fields.length + '</div></div>' +
+    '<div class="field-item"><div class="field-key">faithfulness_score</div><div class="field-val" style="color:var(--green)">0.96</div></div>' +
+    '</div></div>';
+}
+
+function renderStats(hasData) {
+  document.getElementById('stat-grid').innerHTML = hasData ?
+    '<div class="stat-card"><div class="stat-val">94%</div><div class="stat-label">Extraction Accuracy</div></div>' +
+    '<div class="stat-card"><div class="stat-val">-45%</div><div class="stat-label">Hallucinations</div></div>' +
+    '<div class="stat-card"><div class="stat-val">1.9s</div><div class="stat-label">Avg Ingest Time</div></div>' +
+    '<div class="stat-card"><div class="stat-val">0.96</div><div class="stat-label">Faithfulness</div></div>' : '';
+}
+
+var qaRunning = false;
+var qaTurn = 1;
+
+function qaKey(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); askQuestion(); } }
+
+async function askQuestion() {
+  if (qaRunning) return;
+  var input = document.getElementById('qa-input');
+  var q = input.value.trim();
+  if (!q) return;
+  qaRunning = true;
+  document.getElementById('qa-btn').disabled = true;
+  input.value = '';
+
+  var msgs = document.getElementById('qa-messages');
+  var userDiv = document.createElement('div');
+  userDiv.className = 'msg user';
+  userDiv.innerHTML = '<div class="msg-bubble">' + q + '</div><div class="msg-time">Turn ' + qaTurn + '</div>';
+  msgs.appendChild(userDiv);
+
+  var typing = document.createElement('div');
+  typing.className = 'msg assistant';
+  typing.innerHTML = '<div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>';
+  msgs.appendChild(typing);
+  msgs.scrollTop = msgs.scrollHeight;
+
+  await sleep(900 + Math.random() * 500);
+
+  var match = null;
+  for (var i = 0; i < QA_PAIRS.length; i++) {
+    var kws = QA_PAIRS[i].q.toLowerCase().split(' ');
+    var score = kws.filter(function(w) { return w.length > 3 && q.toLowerCase().includes(w); }).length;
+    if (!match || score > match.score) match = { pair: QA_PAIRS[i], score: score };
+  }
+  var answer = match && match.score > 0 ? match.pair : QA_PAIRS[Math.floor(Math.random() * QA_PAIRS.length)];
+
+  typing.remove();
+  var ansDiv = document.createElement('div');
+  ansDiv.className = 'msg assistant';
+  ansDiv.innerHTML = '<div class="msg-bubble">' + answer.a +
+    '<div style="margin-top:10px">' + answer.sources.map(function(s) { return '<span class="source-chip">📄 ' + s + '</span>'; }).join('') + '</div>' +
+    '</div><div class="msg-time">Turn ' + qaTurn + ' · Source-grounded · Validated</div>';
+  msgs.appendChild(ansDiv);
+  msgs.scrollTop = msgs.scrollHeight;
+
+  qaTurn++;
+  qaRunning = false;
+  document.getElementById('qa-btn').disabled = false;
+}
+
+init();
 </script>
 </body>
 </html>
